@@ -5,10 +5,10 @@ public class FirstPersonMovement : MonoBehaviour
 {
     public float speed = 5;
 
-    [Header("Running")]
+    [Header("Shift")]
     public bool canRun = true;
     public bool IsRunning { get; private set; }
-    public float runSpeed = 9;
+    public float runSpeed = 3;
     public KeyCode runningKey = KeyCode.LeftShift;
 
     Rigidbody rigidbody;
