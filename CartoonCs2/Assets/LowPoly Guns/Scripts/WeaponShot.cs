@@ -17,6 +17,8 @@ public class WeaponRaycast : MonoBehaviour
     public TrailRenderer tracerTrail; // Трайл рендерер для трассировки
     public Transform traceStartPoint; // Точка вылета трассировки
 
+    public Animator weaponAnimator; // Аниматор оружия
+
     private int currentAmmo;
     private float nextFireTime = 0f;
     private bool isReloading = false;
@@ -36,13 +38,8 @@ public class WeaponRaycast : MonoBehaviour
     {
         if (shooterCamera == null) return;
 
-        if (Input.GetKeyDown(KeyCode.R) && !isReloading && currentAmmo < maxAmmo)
-        {
-            StartCoroutine(Reload());
-            return;
-        }
-
-        if (Input.GetButton("Fire1") && Time.time >= nextFireTime && !isReloading)
+        // Стрельба только при нажатии левой кнопки мыши
+        if (Input.GetMouseButton(0) && Time.time >= nextFireTime && !isReloading)
         {
             if (currentAmmo > 0)
             {
@@ -54,10 +51,21 @@ public class WeaponRaycast : MonoBehaviour
                 Debug.Log("Нет патронов! Нажмите R для перезарядки.");
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.R) && !isReloading && currentAmmo < maxAmmo)
+        {
+            StartCoroutine(Reload());
+        }
     }
 
     void Shoot()
     {
+        // Вызов анимации выстрела
+        if (weaponAnimator != null)
+        {
+            weaponAnimator.SetTrigger("Shoot");
+        }
+
         // Звук выстрела
         if (gunshotSound != null)
         {
@@ -97,7 +105,6 @@ public class WeaponRaycast : MonoBehaviour
         {
             Debug.Log("Промах");
         }
-
         currentAmmo--;
         Debug.Log("Патроны: " + currentAmmo + "/" + maxAmmo);
     }
@@ -125,7 +132,6 @@ public class WeaponRaycast : MonoBehaviour
         }
         else
         {
-            // Если точки вылета нет, используем позицию камеры
             tracerTrail.transform.position = shooterCamera.transform.position;
             tracerTrail.transform.rotation = shooterCamera.transform.rotation;
         }
