@@ -2,22 +2,25 @@ using UnityEngine;
 
 public class WeaponRaycast : MonoBehaviour
 {
-    public Camera shooterCamera; // Камера для выстрела
-    public float range = 100f; // Дальность
-    public float fireRate = 0.5f; // Время между выстрелами
-    public int maxAmmo = 30; // Максимальный магазин
-    public float reloadTime = 2f; // Время перезарядки
+    public Camera shooterCamera;
+    public float range = 100f;
+    public float fireRate = 0.5f;
+    public int maxAmmo = 30;
+    public float reloadTime = 2f;
 
-    public GameObject muzzleFlashEffect; // Эффект вспышки у дульного среза
-    public Transform muzzleEffectPoint; // Точка появления эффекта у дульного среза
-    public GameObject hitEffectPrefab; // Эффект при попадании
-    public Transform hitEffectPoint; // Точка для эффекта попадания
+    public GameObject muzzleFlashEffect;
+    public Transform muzzleEffectPoint;
+    public GameObject hitEffectPrefab;
+    public Transform hitEffectPoint;
+    public AudioClip gunshotSound;
+    public TrailRenderer tracerTrail;
+    public Transform traceStartPoint;
+    public Animator weaponAnimator;
 
-    public AudioClip gunshotSound; // Звук выстрела
-    public TrailRenderer tracerTrail; // Трайл рендерер для трассировки
-    public Transform traceStartPoint; // Точка вылета трассировки
+    public float spreadAngle = 2f; // разброс при ходьбе
+    public float crouchedSpreadAngle = 0.5f; // разброс при приседании
 
-    public Animator weaponAnimator; // Аниматор оружия
+    public Crouch crouchScript; // ссылка
 
     private int currentAmmo;
     private float nextFireTime = 0f;
@@ -29,16 +32,11 @@ public class WeaponRaycast : MonoBehaviour
         currentAmmo = maxAmmo;
         audioSource = GetComponent<AudioSource>();
         if (tracerTrail != null)
-        {
-            tracerTrail.enabled = false; // Отключить по умолчанию
-        }
+            tracerTrail.enabled = false;
     }
 
     void Update()
     {
-        if (shooterCamera == null) return;
-
-        // Стрельба только при нажатии левой кнопки мыши
         if (Input.GetMouseButton(0) && Time.time >= nextFireTime && !isReloading)
         {
             if (currentAmmo > 0)
@@ -60,41 +58,31 @@ public class WeaponRaycast : MonoBehaviour
 
     void Shoot()
     {
-        // Вызов анимации выстрела
         if (weaponAnimator != null)
-        {
             weaponAnimator.SetTrigger("Shoot");
-        }
-
-        // Звук выстрела
         if (gunshotSound != null)
-        {
             audioSource.PlayOneShot(gunshotSound);
-        }
-
-        // Эффект вспышки у дульного среза
         if (muzzleFlashEffect != null && muzzleEffectPoint != null)
         {
             GameObject muzzleEffect = Instantiate(muzzleFlashEffect, muzzleEffectPoint.position, muzzleEffectPoint.rotation);
             Destroy(muzzleEffect, 1f);
         }
-
-        // Трасса
         if (tracerTrail != null && traceStartPoint != null)
-        {
             StartCoroutine(ShootTracer());
-        }
 
-        // Луч
+        // Расчет направления с учетом разброса
+        Vector3 shootDirection = shooterCamera.transform.forward;
+        float currentSpread = (crouchScript != null && crouchScript.IsCrouched) ? crouchedSpreadAngle : spreadAngle;
+
+        shootDirection = ApplySpread(shootDirection, currentSpread);
+
         RaycastHit hit;
-        Ray ray = new Ray(shooterCamera.transform.position, shooterCamera.transform.forward);
+        Ray ray = new Ray(shooterCamera.transform.position, shootDirection);
         Vector3 targetPoint = ray.origin + ray.direction * range;
 
         if (Physics.Raycast(ray, out hit, range))
         {
             Debug.Log("Попадание в: " + hit.collider.name);
-
-            // Эффект попадания
             if (hitEffectPrefab != null)
             {
                 GameObject hitEffect = Instantiate(hitEffectPrefab, hit.point, Quaternion.LookRotation(hit.normal));
@@ -105,14 +93,31 @@ public class WeaponRaycast : MonoBehaviour
         {
             Debug.Log("Промах");
         }
+
         currentAmmo--;
         Debug.Log("Патроны: " + currentAmmo + "/" + maxAmmo);
+    }
+
+    Vector3 ApplySpread(Vector3 direction, float angle)
+    {
+        float spreadRadius = Mathf.Tan(angle * Mathf.Deg2Rad);
+        Vector2 randomPoint = Random.insideUnitCircle * spreadRadius;
+        Vector3 right = Vector3.Cross(direction, Vector3.up);
+        if (right == Vector3.zero)
+            right = Vector3.Cross(direction, Vector3.forward);
+        Vector3 up = Vector3.Cross(right, direction);
+        Vector3 spreadDirection = direction + right * randomPoint.x + up * randomPoint.y;
+        return spreadDirection.normalized;
     }
 
     System.Collections.IEnumerator Reload()
     {
         isReloading = true;
         Debug.Log("Перезарядка...");
+        if (weaponAnimator != null)
+        {
+            weaponAnimator.SetTrigger("Reload");
+        }
         yield return new WaitForSeconds(reloadTime);
         currentAmmo = maxAmmo;
         isReloading = false;
@@ -124,7 +129,6 @@ public class WeaponRaycast : MonoBehaviour
         tracerTrail.enabled = true;
         tracerTrail.Clear();
 
-        // Устанавливаем стартовую точку трассировки
         if (traceStartPoint != null)
         {
             tracerTrail.transform.position = traceStartPoint.position;
@@ -135,11 +139,16 @@ public class WeaponRaycast : MonoBehaviour
             tracerTrail.transform.position = shooterCamera.transform.position;
             tracerTrail.transform.rotation = shooterCamera.transform.rotation;
         }
-        RaycastHit hit;
-        Ray ray = new Ray(shooterCamera.transform.position, shooterCamera.transform.forward);
+
+        Vector3 direction = shooterCamera.transform.forward;
+        float currentSpread = (crouchScript != null && crouchScript.IsCrouched) ? crouchedSpreadAngle : spreadAngle;
+
+        direction = ApplySpread(direction, currentSpread);
+
+        Ray ray = new Ray(shooterCamera.transform.position, direction);
         Vector3 targetPoint;
 
-        if (Physics.Raycast(ray, out hit, range))
+        if (Physics.Raycast(ray, out var hit, range))
         {
             targetPoint = hit.point;
         }
@@ -149,7 +158,7 @@ public class WeaponRaycast : MonoBehaviour
         }
 
         float elapsedTime = 0f;
-        float duration = 0.05f; // Время отображения трассы
+        float duration = 0.05f;
 
         Vector3 startPosition = tracerTrail.transform.position;
         Vector3 endPosition = targetPoint;
@@ -163,7 +172,6 @@ public class WeaponRaycast : MonoBehaviour
 
         tracerTrail.transform.position = endPosition;
         yield return new WaitForSeconds(0.01f);
-
         tracerTrail.enabled = false;
     }
 }
