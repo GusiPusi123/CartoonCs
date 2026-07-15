@@ -174,14 +174,14 @@ MonoBehaviour:
     value: 1
   gradingMode:
     overrideState: 1
-    value: 0
+    value: 1
   externalLut:
     overrideState: 1
     value: {fileID: 0}
     defaultState: 1
   tonemapper:
     overrideState: 1
-    value: 0
+    value: 1
   toneCurveToeStrength:
     overrideState: 1
     value: 0
@@ -227,18 +227,18 @@ MonoBehaviour:
     value: 0
   postExposure:
     overrideState: 1
-    value: 1
+    value: -2
   contrast:
     overrideState: 1
-    value: 70
+    value: 100
   mixerRedOutRedIn:
-    overrideState: 1
+    overrideState: 0
     value: 100
   mixerRedOutGreenIn:
-    overrideState: 1
+    overrideState: 0
     value: 0
   mixerRedOutBlueIn:
-    overrideState: 1
+    overrideState: 0
     value: 0
   mixerGreenOutRedIn:
     overrideState: 1
@@ -1479,7 +1479,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1cb7e9e120078f43bce4f0b1be547a7, type: 3}
   m_Name: AmbientOcclusion
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   enabled:
     overrideState: 1
     value: 1
@@ -1493,7 +1493,7 @@ MonoBehaviour:
     overrideState: 1
     value: {r: 0.56350124, g: 0.5991023, b: 0.6320754, a: 1}
   ambientOnly:
-    overrideState: 1
+    overrideState: 0
     value: 1
   noiseFilterTolerance:
     overrideState: 1
@@ -1505,7 +1505,7 @@ MonoBehaviour:
     overrideState: 1
     value: -12
   thicknessModifier:
-    overrideState: 1
+    overrideState: 0
     value: 1
   zBias:
     overrideState: 0
@@ -1609,40 +1609,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48a79b01ea5641d4aa6daa2e23605641, type: 3}
   m_Name: Bloom
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   enabled:
     overrideState: 1
     value: 1
   intensity:
     overrideState: 1
-    value: 2
+    value: 1
   threshold:
-    overrideState: 1
+    overrideState: 0
     value: 1
   softKnee:
-    overrideState: 1
-    value: 0.5
+    overrideState: 0
+    value: 0
   clamp:
-    overrideState: 1
+    overrideState: 0
     value: 65472
   diffusion:
-    overrideState: 1
+    overrideState: 0
     value: 10
   anamorphicRatio:
-    overrideState: 1
+    overrideState: 0
     value: 0
   color:
-    overrideState: 1
+    overrideState: 0
     value: {r: 1, g: 1, b: 1, a: 1}
   fastMode:
     overrideState: 1
     value: 1
   dirtTexture:
-    overrideState: 1
-    value: {fileID: 2800000, guid: a2960ffde020f27409e070d92fb2e00b, type: 3}
+    overrideState: 0
+    value: {fileID: 0}
     defaultState: 1
   dirtIntensity:
-    overrideState: 1
+    overrideState: 0
     value: 1000
 --- !u!114 &114905349723521868
 MonoBehaviour:
