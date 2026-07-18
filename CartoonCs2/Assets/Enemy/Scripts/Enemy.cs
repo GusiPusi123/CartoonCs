@@ -270,168 +270,155 @@
 // }
 
 
-
-
 using UnityEngine;
-using System.Collections;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : MonoBehaviour
 {
-    public NavMeshAgent navAgent;
-    public Transform player;
-    public LayerMask groundLayer, playerLayer;
-    public float health;
-    public float walkPointRange;
-    public float timeBetweenAttacks;
-    public float sightRange;
-    public float attackRange;
-    public int damage;
-    public ParticleSystem hitEffect;
+    [Header("Здоровье")]
+    [SerializeField] private int maxHealth = 100;
+    private int currentHealth;
 
-    private Vector3 walkPoint;
-    private bool walkPointSet;
-    private bool alreadyAttacked;
-    private bool takeDamage;
+    [Header("Цель")]
+    [SerializeField] private Transform player;
+
+    [Header("Параметры преследования")]
+    [SerializeField] private float chaseSpeed = 3.5f;
+    [SerializeField] private float detectionRadius = 15f; // на каком расстоянии враг замечает игрока
+    [SerializeField] private float stoppingDistance = 1.5f; // на каком расстоянии останавливается
+
+    [Header("Обновление пути")]
+    [SerializeField] private float pathUpdateRate = 0.2f; // как часто пересчитывать путь (сек)
+
+    [Header("Обработка позиции вне NavMesh")]
+    [SerializeField] private float navMeshSampleRadius = 5f; // радиус поиска ближайшей точки NavMesh
+    [SerializeField] private float loseTargetTime = 3f; // через сколько секунд враг "теряет" игрока, если тот вне досягаемости
+    private float timeSinceLastValidPath;
+
+    [Header("Реакция на урон")]
+    [SerializeField] private Animator animator; // если есть триггеры "Hit" / "Die"
+    [SerializeField] private GameObject deathEffect; // партиклы/эффект смерти (необязательно)
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip hitSound;
+    [SerializeField] private AudioClip deathSound;
+
+    private NavMeshAgent agent;
+    private float pathUpdateTimer;
+    private bool isDead;
 
     private void Awake()
     {
-        // animator = GetComponent<Animator>(); // Удалено
-        player = GameObject.Find("Player").transform;
-        navAgent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
+        agent.speed = chaseSpeed;
+        agent.stoppingDistance = stoppingDistance;
+
+        currentHealth = maxHealth;
+    }
+
+    private void Start()
+    {
+        if (player == null)
+        {
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+            if (playerObj != null)
+                player = playerObj.transform;
+        }
     }
 
     private void Update()
     {
-        bool playerInSightRange = Physics.CheckSphere(transform.position, sightRange, playerLayer);
-        bool playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayer);
+        if (isDead || player == null) return;
 
-        if (!playerInSightRange && !playerInAttackRange)
+        // Если агент сейчас не на NavMesh (провалился, застрял) — ничего не делаем
+        if (!agent.isOnNavMesh) return;
+
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+
+        if (distanceToPlayer <= detectionRadius)
         {
-            Patroling();
-        }
-        else if (playerInSightRange && !playerInAttackRange)
-        {
-            ChasePlayer();
-        }
-        else if (playerInAttackRange && playerInSightRange)
-        {
-            AttackPlayer();
-        }
-        else if (!playerInSightRange && takeDamage)
-        {
-            ChasePlayer();
-        }
-    }
-
-    private void Patroling()
-    {
-        if (!walkPointSet)
-        {
-            SearchWalkPoint();
-        }
-
-        if (walkPointSet)
-        {
-            navAgent.SetDestination(walkPoint);
-        }
-
-        Vector3 distanceToWalkPoint = transform.position - walkPoint;
-        // animator.SetFloat("Velocity", 0.2f); // Удалено
-
-        if (distanceToWalkPoint.magnitude < 1f)
-        {
-            walkPointSet = false;
-        }
-    }
-
-    private void SearchWalkPoint()
-    {
-        float randomZ = Random.Range(-walkPointRange, walkPointRange);
-        float randomX = Random.Range(-walkPointRange, walkPointRange);
-        walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, groundLayer))
-        {
-            walkPointSet = true;
-        }
-    }
-
-    private void ChasePlayer()
-    {
-        navAgent.SetDestination(player.position);
-        // animator.SetFloat("Velocity", 0.6f); // Удалено
-        navAgent.isStopped = false;
-    }
-
-    private void AttackPlayer()
-    {
-        navAgent.SetDestination(transform.position);
-
-        if (!alreadyAttacked)
-        {
-            transform.LookAt(player.position);
-            alreadyAttacked = true;
-            // animator.SetBool("Attack", true); // Удалено
-            Invoke(nameof(ResetAttack), timeBetweenAttacks);
-
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.forward, out hit, attackRange))
+            pathUpdateTimer -= Time.deltaTime;
+            if (pathUpdateTimer <= 0f)
             {
-                /*
-                // Этот блок можно оставить, если хотите использовать урон через кастомные скрипты
-                PlayerHUD playerHUD = hit.transform.GetComponent<PlayerHUD>();
-                if (playerHUD != null)
-                {
-                   playerHUD.takeDamage(damage);
-                }
-                */
+                UpdateChaseTarget();
+                pathUpdateTimer = pathUpdateRate;
+            }
+        }
+        else
+        {
+            agent.ResetPath();
+        }
+    }
+
+    private void UpdateChaseTarget()
+    {
+        // Ищем ближайшую валидную точку NavMesh рядом с игроком
+        // (работает, даже если игрок прыгнул на ящик, крышу, вылез за пределы сетки)
+        if (NavMesh.SamplePosition(player.position, out NavMeshHit hit, navMeshSampleRadius, NavMesh.AllAreas))
+        {
+            agent.SetDestination(hit.position);
+            timeSinceLastValidPath = 0f;
+        }
+        else
+        {
+            // Игрок слишком далеко от NavMesh — увеличиваем таймер
+            timeSinceLastValidPath += pathUpdateRate;
+
+            if (timeSinceLastValidPath >= loseTargetTime)
+            {
+                // Враг остаётся на последней известной точке и просто ждёт
+                // Можно добавить сюда состояние "потерял игрока" (патрулирование и т.п.)
             }
         }
     }
 
-    private void ResetAttack()
+    // Вызывается из LaserSword.cs: enemyComponent.TakeDamage(damage);
+    public void TakeDamage(int damageAmount)
     {
-        alreadyAttacked = false;
-        // animator.SetBool("Attack", false); // Удалено
-    }
+        if (isDead) return;
 
-    public void TakeDamage(float damage)
-    {
-        health -= damage;
-        hitEffect.Play();
-        StartCoroutine(TakeDamageCoroutine());
+        currentHealth -= damageAmount;
 
-        if (health <= 0)
+        if (animator != null)
+            animator.SetTrigger("Hit");
+
+        if (audioSource != null && hitSound != null)
+            audioSource.PlayOneShot(hitSound);
+
+        if (currentHealth <= 0)
         {
-            Invoke(nameof(DestroyEnemy), 0.5f);
+            Die();
         }
     }
 
-    private IEnumerator TakeDamageCoroutine()
+    private void Die()
     {
-        takeDamage = true;
-        yield return new WaitForSeconds(2f);
-        takeDamage = false;
-    }
+        isDead = true;
 
-    private void DestroyEnemy()
-    {
-        StartCoroutine(DestroyEnemyCoroutine());
-    }
+        // Останавливаем движение
+        agent.isStopped = true;
+        agent.enabled = false;
 
-    private IEnumerator DestroyEnemyCoroutine()
-    {
-        // animator.SetBool("Dead", true); // Удалено
-        yield return new WaitForSeconds(1.8f);
-        Destroy(gameObject);
+        if (animator != null)
+            animator.SetTrigger("Die");
+
+        if (audioSource != null && deathSound != null)
+            audioSource.PlayOneShot(deathSound);
+
+        if (deathEffect != null)
+            Instantiate(deathEffect, transform.position, Quaternion.identity);
+
+        // Отключаем коллайдер, чтобы труп не мешал (по желанию)
+        Collider col = GetComponent<Collider>();
+        if (col != null) col.enabled = false;
+
+        // Уничтожаем объект через время (даём анимации смерти доиграть)
+        Destroy(gameObject, 2f);
     }
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, sightRange);
+        Gizmos.DrawWireSphere(transform.position, detectionRadius);
     }
 }
