@@ -10537,7 +10537,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 406762508}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MapArena
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27691,7 +27691,7 @@ MonoBehaviour:
   firePoint: {fileID: 1695427788}
   lineOfSightMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 257
   fireRate: 0.3
   shootRange: 15
   hitscanDamage: 10
@@ -27705,6 +27705,8 @@ MonoBehaviour:
   deathSound: {fileID: 0}
   muzzleFlashEffect: {fileID: 0}
   deathEffect: {fileID: 0}
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashDuration: 0.1
   pathUpdateRate: 0.2
   navMeshSampleRadius: 5
 --- !u!195 &531100742
@@ -32005,7 +32007,7 @@ MonoBehaviour:
   firePoint: {fileID: 1748722118}
   lineOfSightMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 257
   fireRate: 0.3
   shootRange: 15
   hitscanDamage: 10
@@ -32019,6 +32021,8 @@ MonoBehaviour:
   deathSound: {fileID: 0}
   muzzleFlashEffect: {fileID: 0}
   deathEffect: {fileID: 0}
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashDuration: 0.1
   pathUpdateRate: 0.2
   navMeshSampleRadius: 5
 --- !u!195 &670089509
@@ -33853,6 +33857,8 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   hitSound: {fileID: 0}
   deathSound: {fileID: 0}
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashDuration: 0.1
 --- !u!54 &754535830
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -37680,7 +37686,7 @@ MonoBehaviour:
   firePoint: {fileID: 2060451940}
   lineOfSightMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 257
   fireRate: 0.3
   shootRange: 15
   hitscanDamage: 10
@@ -37694,6 +37700,8 @@ MonoBehaviour:
   deathSound: {fileID: 0}
   muzzleFlashEffect: {fileID: 0}
   deathEffect: {fileID: 0}
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashDuration: 0.1
   pathUpdateRate: 0.2
   navMeshSampleRadius: 5
 --- !u!195 &874702126
@@ -38042,6 +38050,8 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   hitSound: {fileID: 0}
   deathSound: {fileID: 0}
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashDuration: 0.1
 --- !u!54 &965826950
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -38206,6 +38216,8 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   hitSound: {fileID: 0}
   deathSound: {fileID: 0}
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashDuration: 0.1
 --- !u!54 &970237083
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -50440,7 +50452,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: 0.65}
-  m_LocalScale: {x: 0.8, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1417537183}
@@ -52899,7 +52911,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: 0.65}
-  m_LocalScale: {x: 0.8, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1971223705}
@@ -62646,6 +62658,8 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   hitSound: {fileID: 0}
   deathSound: {fileID: 0}
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashDuration: 0.1
 --- !u!54 &1371410106
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -64260,7 +64274,7 @@ MonoBehaviour:
   firePoint: {fileID: 1082257577}
   lineOfSightMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 257
   fireRate: 0.3
   shootRange: 15
   hitscanDamage: 10
@@ -64274,6 +64288,8 @@ MonoBehaviour:
   deathSound: {fileID: 0}
   muzzleFlashEffect: {fileID: 0}
   deathEffect: {fileID: 0}
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashDuration: 0.1
   pathUpdateRate: 0.2
   navMeshSampleRadius: 5
 --- !u!195 &1417537178
@@ -80309,7 +80325,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: 0.65}
-  m_LocalScale: {x: 0.8, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 531100747}
@@ -82331,7 +82347,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: 0.65}
-  m_LocalScale: {x: 0.8, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 670089514}
@@ -84436,6 +84452,8 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   hitSound: {fileID: 0}
   deathSound: {fileID: 0}
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashDuration: 0.1
 --- !u!54 &1800652220
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -91673,6 +91691,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 756062110}
+    - target: {fileID: 4824746695730507540, guid: 1055e297118883e40a13c7e09d49d998, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4836442723445022327, guid: 1055e297118883e40a13c7e09d49d998, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -94696,6 +94718,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 2062200965}
+    - target: {fileID: 4824746695730507540, guid: 1055e297118883e40a13c7e09d49d998, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4836442723445022327, guid: 1055e297118883e40a13c7e09d49d998, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -99647,7 +99673,7 @@ MonoBehaviour:
   firePoint: {fileID: 1190661810}
   lineOfSightMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 257
   fireRate: 0.3
   shootRange: 15
   hitscanDamage: 10
@@ -99661,6 +99687,8 @@ MonoBehaviour:
   deathSound: {fileID: 0}
   muzzleFlashEffect: {fileID: 0}
   deathEffect: {fileID: 0}
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashDuration: 0.1
   pathUpdateRate: 0.2
   navMeshSampleRadius: 5
 --- !u!195 &1971223700
@@ -106547,7 +106575,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: 0.65}
-  m_LocalScale: {x: 0.8, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 874702131}
@@ -111246,6 +111274,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 801526306}
+    - target: {fileID: 4824746695730507540, guid: 1055e297118883e40a13c7e09d49d998, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4836442723445022327, guid: 1055e297118883e40a13c7e09d49d998, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -111363,7 +111395,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.6
+  m_Volume: 0.3
   m_Pitch: 2
   Loop: 0
   Mute: 0
@@ -116772,8 +116804,8 @@ Transform:
   m_GameObject: {fileID: 3999745686951256531}
   serializedVersion: 2
   m_LocalRotation: {x: 0.82665634, y: -0.35591367, z: -0.41528827, w: 0.1322893}
-  m_LocalPosition: {x: -0.123, y: -0.261, z: 0.553}
-  m_LocalScale: {x: 50, y: 50, z: 30}
+  m_LocalPosition: {x: -0.123, y: -0.45, z: 0.644}
+  m_LocalScale: {x: 75, y: 75, z: 50}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2741159125147269153}
@@ -117138,6 +117170,10 @@ PrefabInstance:
       propertyPath: m_IncludeLayers.m_Bits
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 4824746695730507540, guid: 1055e297118883e40a13c7e09d49d998, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 5080279852640572677, guid: 1055e297118883e40a13c7e09d49d998, type: 3}
       propertyPath: m_Name
       value: Jumper
@@ -117259,6 +117295,10 @@ PrefabInstance:
       propertyPath: sharedProfile
       value: 
       objectReference: {fileID: 11400000, guid: 2c9ebc5b5de64494eb66e1f3eb755731, type: 2}
+    - target: {fileID: 3382238132417252182, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 3680416533877375202, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
       propertyPath: m_CastShadows
       value: 0
@@ -117404,7 +117444,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 611022339}
     - target: {fileID: 9056068187554285235, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      propertyPath: field of view
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 9056068187554285235, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
       propertyPath: m_OcclusionCulling
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9056068187554285235, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      propertyPath: m_projectionMatrixMode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9056068187554285235, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}

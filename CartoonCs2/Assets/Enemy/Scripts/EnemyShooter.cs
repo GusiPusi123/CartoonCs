@@ -31,7 +31,7 @@ public class EnemyShooter : MonoBehaviour
 
     [Header("Тип атаки")]
     [SerializeField] private bool useProjectile = false;
-    [SerializeField] private GameObject projectilePrefab; // урон настраивается на самом префабе (Projectile.cs)
+    [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private float projectileSpeed = 20f;
 
     [Header("Эффекты")]
@@ -43,6 +43,10 @@ public class EnemyShooter : MonoBehaviour
     [SerializeField] private GameObject muzzleFlashEffect;
     [SerializeField] private GameObject deathEffect;
 
+    [Header("Мигание при уроне")]
+    [SerializeField] private Color flashColor = Color.white;
+    [SerializeField] private float flashDuration = 1f;
+
     [Header("Обновление пути / NavMesh")]
     [SerializeField] private float pathUpdateRate = 0.2f;
     [SerializeField] private float navMeshSampleRadius = 5f;
@@ -53,11 +57,22 @@ public class EnemyShooter : MonoBehaviour
     private bool isDead;
     private bool hasLineOfSight;
 
+    private Renderer[] renderers;
+    private Color[] originalColors;
+    private Coroutine flashCoroutine;
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.speed = moveSpeed;
         currentHealth = maxHealth;
+
+        renderers = GetComponentsInChildren<Renderer>();
+        originalColors = new Color[renderers.Length];
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            originalColors[i] = renderers[i].material.color;
+        }
     }
 
     private void Start()
@@ -273,10 +288,34 @@ public class EnemyShooter : MonoBehaviour
         if (audioSource != null && hitSound != null)
             audioSource.PlayOneShot(hitSound);
 
+        // Мигание белым при получении урона
+        if (flashCoroutine != null)
+            StopCoroutine(flashCoroutine);
+        flashCoroutine = StartCoroutine(FlashWhite());
+
         if (currentHealth <= 0)
         {
             Die();
         }
+    }
+
+    private System.Collections.IEnumerator FlashWhite()
+    {
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            if (renderers[i] != null)
+                renderers[i].material.color = flashColor;
+        }
+
+        yield return new WaitForSeconds(flashDuration);
+
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            if (renderers[i] != null)
+                renderers[i].material.color = originalColors[i];
+        }
+
+        flashCoroutine = null;
     }
 
     private void Die()

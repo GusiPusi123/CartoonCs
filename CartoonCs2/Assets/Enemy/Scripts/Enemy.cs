@@ -285,27 +285,35 @@ public class Enemy : MonoBehaviour
 
     [Header("Параметры преследования")]
     [SerializeField] private float chaseSpeed = 3.5f;
-    [SerializeField] private float detectionRadius = 15f; // на каком расстоянии враг замечает игрока
-    [SerializeField] private float stoppingDistance = 1.5f; // на каком расстоянии останавливается
+    [SerializeField] private float detectionRadius = 15f;
+    [SerializeField] private float stoppingDistance = 1.5f;
 
     [Header("Обновление пути")]
-    [SerializeField] private float pathUpdateRate = 0.2f; // как часто пересчитывать путь (сек)
+    [SerializeField] private float pathUpdateRate = 0.2f;
 
     [Header("Обработка позиции вне NavMesh")]
-    [SerializeField] private float navMeshSampleRadius = 5f; // радиус поиска ближайшей точки NavMesh
-    [SerializeField] private float loseTargetTime = 3f; // через сколько секунд враг "теряет" игрока, если тот вне досягаемости
+    [SerializeField] private float navMeshSampleRadius = 5f;
+    [SerializeField] private float loseTargetTime = 3f;
     private float timeSinceLastValidPath;
 
     [Header("Реакция на урон")]
-    [SerializeField] private Animator animator; // если есть триггеры "Hit" / "Die"
-    [SerializeField] private GameObject deathEffect; // партиклы/эффект смерти (необязательно)
+    [SerializeField] private Animator animator;
+    [SerializeField] private GameObject deathEffect;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip hitSound;
     [SerializeField] private AudioClip deathSound;
 
+    [Header("Мигание при уроне")]
+    [SerializeField] private Color flashColor = Color.white;
+    [SerializeField] private float flashDuration = 1f; // сколько секунд длится мигание
+
     private NavMeshAgent agent;
     private float pathUpdateTimer;
     private bool isDead;
+
+    private Renderer[] renderers;
+    private Color[] originalColors;
+    private Coroutine flashCoroutine;
 
     private void Awake()
     {
@@ -314,6 +322,14 @@ public class Enemy : MonoBehaviour
         agent.stoppingDistance = stoppingDistance;
 
         currentHealth = maxHealth;
+
+        // Собираем все рендереры врага (включая дочерние объекты модели) и запоминаем их исходные цвета
+        renderers = GetComponentsInChildren<Renderer>();
+        originalColors = new Color[renderers.Length];
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            originalColors[i] = renderers[i].material.color;
+        }
     }
 
     private void Start()
@@ -330,7 +346,6 @@ public class Enemy : MonoBehaviour
     {
         if (isDead || player == null) return;
 
-        // Если агент сейчас не на NavMesh (провалился, застрял) — ничего не делаем
         if (!agent.isOnNavMesh) return;
 
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
@@ -352,8 +367,6 @@ public class Enemy : MonoBehaviour
 
     private void UpdateChaseTarget()
     {
-        // Ищем ближайшую валидную точку NavMesh рядом с игроком
-        // (работает, даже если игрок прыгнул на ящик, крышу, вылез за пределы сетки)
         if (NavMesh.SamplePosition(player.position, out NavMeshHit hit, navMeshSampleRadius, NavMesh.AllAreas))
         {
             agent.SetDestination(hit.position);
@@ -361,18 +374,15 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            // Игрок слишком далеко от NavMesh — увеличиваем таймер
             timeSinceLastValidPath += pathUpdateRate;
 
             if (timeSinceLastValidPath >= loseTargetTime)
             {
                 // Враг остаётся на последней известной точке и просто ждёт
-                // Можно добавить сюда состояние "потерял игрока" (патрулирование и т.п.)
             }
         }
     }
 
-    // Вызывается из LaserSword.cs: enemyComponent.TakeDamage(damage);
     public void TakeDamage(int damageAmount)
     {
         if (isDead) return;
@@ -385,17 +395,40 @@ public class Enemy : MonoBehaviour
         if (audioSource != null && hitSound != null)
             audioSource.PlayOneShot(hitSound);
 
+        // Мигание белым при получении урона
+        if (flashCoroutine != null)
+            StopCoroutine(flashCoroutine);
+        flashCoroutine = StartCoroutine(FlashWhite());
+
         if (currentHealth <= 0)
         {
             Die();
         }
     }
 
+    private System.Collections.IEnumerator FlashWhite()
+    {
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            if (renderers[i] != null)
+                renderers[i].material.color = flashColor;
+        }
+
+        yield return new WaitForSeconds(flashDuration);
+
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            if (renderers[i] != null)
+                renderers[i].material.color = originalColors[i];
+        }
+
+        flashCoroutine = null;
+    }
+
     private void Die()
     {
         isDead = true;
 
-        // Останавливаем движение
         agent.isStopped = true;
         agent.enabled = false;
 
@@ -408,11 +441,9 @@ public class Enemy : MonoBehaviour
         if (deathEffect != null)
             Instantiate(deathEffect, transform.position, Quaternion.identity);
 
-        // Отключаем коллайдер, чтобы труп не мешал (по желанию)
         Collider col = GetComponent<Collider>();
         if (col != null) col.enabled = false;
 
-        // Уничтожаем объект через время (даём анимации смерти доиграть)
         Destroy(gameObject, 2f);
     }
 
