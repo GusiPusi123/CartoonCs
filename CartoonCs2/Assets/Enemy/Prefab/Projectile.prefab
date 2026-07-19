@@ -150,7 +150,7 @@ MonoBehaviour:
   damage: 10
   lifeTime: 5
   hitEffect: {fileID: 0}
-  debugLogs: 1
+  debugLogs: 0
 --- !u!96 &4295469836473107318
 TrailRenderer:
   serializedVersion: 3
