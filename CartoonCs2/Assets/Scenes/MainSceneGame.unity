@@ -3255,6 +3255,37 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!1 &143357518
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 143357519}
+  m_Layer: 7
+  m_Name: AimTraget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &143357519
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143357518}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.6, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 717883725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &144273222
 GameObject:
   m_ObjectHideFlags: 0
@@ -27684,6 +27715,8 @@ MonoBehaviour:
   debugLogs: 1
   maxHealth: 80
   player: {fileID: 717883725}
+  aimTarget: {fileID: 143357519}
+  aimHeightOffset: 1
   detectionRadius: 100
   preferredDistance: 14
   retreatDistance: 5
@@ -27697,7 +27730,7 @@ MonoBehaviour:
   hitscanDamage: 10
   useProjectile: 1
   projectilePrefab: {fileID: 3302181832061074356, guid: 4b4aeb92fae10fc478062e15e1d035c6, type: 3}
-  projectileSpeed: 10
+  projectileSpeed: 15
   animator: {fileID: 0}
   audioSource: {fileID: 0}
   shootSound: {fileID: 0}
@@ -32000,6 +32033,8 @@ MonoBehaviour:
   debugLogs: 1
   maxHealth: 80
   player: {fileID: 717883725}
+  aimTarget: {fileID: 143357519}
+  aimHeightOffset: 1
   detectionRadius: 100
   preferredDistance: 14
   retreatDistance: 5
@@ -32013,7 +32048,7 @@ MonoBehaviour:
   hitscanDamage: 10
   useProjectile: 1
   projectilePrefab: {fileID: 3302181832061074356, guid: 4b4aeb92fae10fc478062e15e1d035c6, type: 3}
-  projectileSpeed: 10
+  projectileSpeed: 15
   animator: {fileID: 0}
   audioSource: {fileID: 0}
   shootSound: {fileID: 0}
@@ -37679,6 +37714,8 @@ MonoBehaviour:
   debugLogs: 1
   maxHealth: 80
   player: {fileID: 717883725}
+  aimTarget: {fileID: 143357519}
+  aimHeightOffset: 1
   detectionRadius: 100
   preferredDistance: 14
   retreatDistance: 5
@@ -37692,7 +37729,7 @@ MonoBehaviour:
   hitscanDamage: 10
   useProjectile: 1
   projectilePrefab: {fileID: 3302181832061074356, guid: 4b4aeb92fae10fc478062e15e1d035c6, type: 3}
-  projectileSpeed: 10
+  projectileSpeed: 15
   animator: {fileID: 0}
   audioSource: {fileID: 0}
   shootSound: {fileID: 0}
@@ -64267,6 +64304,8 @@ MonoBehaviour:
   debugLogs: 1
   maxHealth: 80
   player: {fileID: 717883725}
+  aimTarget: {fileID: 143357519}
+  aimHeightOffset: 1
   detectionRadius: 100
   preferredDistance: 14
   retreatDistance: 5
@@ -64280,7 +64319,7 @@ MonoBehaviour:
   hitscanDamage: 10
   useProjectile: 1
   projectilePrefab: {fileID: 3302181832061074356, guid: 4b4aeb92fae10fc478062e15e1d035c6, type: 3}
-  projectileSpeed: 10
+  projectileSpeed: 15
   animator: {fileID: 0}
   audioSource: {fileID: 0}
   shootSound: {fileID: 0}
@@ -99666,6 +99705,8 @@ MonoBehaviour:
   debugLogs: 1
   maxHealth: 80
   player: {fileID: 717883725}
+  aimTarget: {fileID: 143357519}
+  aimHeightOffset: 1
   detectionRadius: 100
   preferredDistance: 14
   retreatDistance: 5
@@ -99679,7 +99720,7 @@ MonoBehaviour:
   hitscanDamage: 10
   useProjectile: 1
   projectilePrefab: {fileID: 3302181832061074356, guid: 4b4aeb92fae10fc478062e15e1d035c6, type: 3}
-  projectileSpeed: 10
+  projectileSpeed: 15
   animator: {fileID: 0}
   audioSource: {fileID: 0}
   shootSound: {fileID: 0}
@@ -117474,6 +117515,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8129543334651935623, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 295755361}
+    - targetCorrespondingSourceObject: {fileID: 6526899840674656900, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 143357519}
     - targetCorrespondingSourceObject: {fileID: 5293444984094233560, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1688190277}

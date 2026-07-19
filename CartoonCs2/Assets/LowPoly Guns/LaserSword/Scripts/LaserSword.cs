@@ -120,10 +120,10 @@ public class LaserSword : MonoBehaviour
         {
             if (enemy.CompareTag("Enemy"))
             {
-                Enemy enemyComponent = enemy.GetComponent<Enemy>();
-                if (enemyComponent != null)
+                IDamageable damageable = enemy.GetComponent<IDamageable>();
+                if (damageable != null)
                 {
-                    enemyComponent.TakeDamage(damage);
+                    damageable.TakeDamage(damage);
                 }
             }
         }

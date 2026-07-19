@@ -274,7 +274,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IDamageable
 {
     [Header("Здоровье")]
     [SerializeField] private int maxHealth = 100;
@@ -305,7 +305,7 @@ public class Enemy : MonoBehaviour
 
     [Header("Мигание при уроне")]
     [SerializeField] private Color flashColor = Color.white;
-    [SerializeField] private float flashDuration = 1f; // сколько секунд длится мигание
+    [SerializeField] private float flashDuration = 1f;
 
     private NavMeshAgent agent;
     private float pathUpdateTimer;
@@ -323,7 +323,6 @@ public class Enemy : MonoBehaviour
 
         currentHealth = maxHealth;
 
-        // Собираем все рендереры врага (включая дочерние объекты модели) и запоминаем их исходные цвета
         renderers = GetComponentsInChildren<Renderer>();
         originalColors = new Color[renderers.Length];
         for (int i = 0; i < renderers.Length; i++)
@@ -395,7 +394,6 @@ public class Enemy : MonoBehaviour
         if (audioSource != null && hitSound != null)
             audioSource.PlayOneShot(hitSound);
 
-        // Мигание белым при получении урона
         if (flashCoroutine != null)
             StopCoroutine(flashCoroutine);
         flashCoroutine = StartCoroutine(FlashWhite());

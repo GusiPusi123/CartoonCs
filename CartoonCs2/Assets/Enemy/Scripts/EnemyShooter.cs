@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class EnemyShooter : MonoBehaviour
+public class EnemyShooter : MonoBehaviour, IDamageable
 {
     [Header("Диагностика")]
     [SerializeField] private bool debugLogs = true;
@@ -13,6 +13,10 @@ public class EnemyShooter : MonoBehaviour
 
     [Header("Цель")]
     [SerializeField] private Transform player;
+    [SerializeField] private Transform aimTarget; // точка прицеливания на игроке (например, в районе груди). Если не задана — используется player.position + aimHeightOffset
+
+    [Header("Высота прицеливания (если aimTarget не задан)")]
+    [SerializeField] private float aimHeightOffset = 1f;
 
     [Header("Дистанция боя")]
     [SerializeField] private float detectionRadius = 20f;
@@ -94,6 +98,9 @@ public class EnemyShooter : MonoBehaviour
             else
                 Debug.Log($"[{name}] Игрок найден: {player.name}");
 
+            if (aimTarget == null)
+                Debug.Log($"[{name}] Aim Target не задан, используется player.position + aimHeightOffset ({aimHeightOffset})");
+
             if (shootRange < preferredDistance)
                 Debug.LogWarning($"[{name}] shootRange ({shootRange}) меньше preferredDistance ({preferredDistance})!");
 
@@ -135,17 +142,28 @@ public class EnemyShooter : MonoBehaviour
         }
     }
 
+    // Возвращает точку, в которую враг целится: aimTarget, если задан, иначе позиция игрока + смещение по высоте
+    private Vector3 GetAimPoint()
+    {
+        if (aimTarget != null)
+            return aimTarget.position;
+
+        return player.position + Vector3.up * aimHeightOffset;
+    }
+
     private void CheckLineOfSight(float distanceToPlayer)
     {
         Vector3 origin = firePoint.position;
-        Vector3 direction = (player.position - origin).normalized;
+        Vector3 aimPoint = GetAimPoint();
+        Vector3 direction = (aimPoint - origin).normalized;
+        float distanceToAimPoint = Vector3.Distance(origin, aimPoint);
 
-        bool blocked = Physics.Raycast(origin, direction, out RaycastHit hit, distanceToPlayer, lineOfSightMask);
+        bool blocked = Physics.Raycast(origin, direction, out RaycastHit hit, distanceToAimPoint, lineOfSightMask);
         hasLineOfSight = !blocked;
 
         if (debugLogs)
         {
-            Debug.DrawLine(origin, player.position, hasLineOfSight ? Color.green : Color.red, pathUpdateRate);
+            Debug.DrawLine(origin, aimPoint, hasLineOfSight ? Color.green : Color.red, pathUpdateRate);
         }
     }
 
@@ -216,7 +234,7 @@ public class EnemyShooter : MonoBehaviour
 
     private void ShootHitscan()
     {
-        Vector3 targetPoint = player.position + Vector3.up * 1f;
+        Vector3 targetPoint = GetAimPoint();
         Vector3 direction = (targetPoint - firePoint.position).normalized;
 
         if (Physics.Raycast(firePoint.position, direction, out RaycastHit hit, shootRange))
@@ -251,7 +269,7 @@ public class EnemyShooter : MonoBehaviour
             return;
         }
 
-        Vector3 targetPoint = player.position + Vector3.up * 1f;
+        Vector3 targetPoint = GetAimPoint();
         Vector3 direction = (targetPoint - firePoint.position).normalized;
 
         GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.LookRotation(direction));
@@ -288,7 +306,6 @@ public class EnemyShooter : MonoBehaviour
         if (audioSource != null && hitSound != null)
             audioSource.PlayOneShot(hitSound);
 
-        // Мигание белым при получении урона
         if (flashCoroutine != null)
             StopCoroutine(flashCoroutine);
         flashCoroutine = StartCoroutine(FlashWhite());
@@ -350,5 +367,11 @@ public class EnemyShooter : MonoBehaviour
 
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireSphere(transform.position, retreatDistance);
+
+        if (aimTarget != null)
+        {
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawWireSphere(aimTarget.position, 0.15f);
+        }
     }
 }
