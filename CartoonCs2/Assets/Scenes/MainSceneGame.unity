@@ -1616,6 +1616,14 @@ PrefabInstance:
       propertyPath: deathEffect
       value: 
       objectReference: {fileID: 8983516140579889374, guid: 6c5b8a6ff3e5d9c49bfce4914a55b245, type: 3}
+    - target: {fileID: 4990881040082672466, guid: efa66061bf8ef3342a330c51015331bb, type: 3}
+      propertyPath: attackDamage
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4990881040082672466, guid: efa66061bf8ef3342a330c51015331bb, type: 3}
+      propertyPath: attackCooldown
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5297987845251490557, guid: efa66061bf8ef3342a330c51015331bb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -5945,6 +5953,14 @@ PrefabInstance:
       propertyPath: deathEffect
       value: 
       objectReference: {fileID: 8983516140579889374, guid: 6c5b8a6ff3e5d9c49bfce4914a55b245, type: 3}
+    - target: {fileID: 4990881040082672466, guid: efa66061bf8ef3342a330c51015331bb, type: 3}
+      propertyPath: attackDamage
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4990881040082672466, guid: efa66061bf8ef3342a330c51015331bb, type: 3}
+      propertyPath: attackCooldown
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5297987845251490557, guid: efa66061bf8ef3342a330c51015331bb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -22903,6 +22919,14 @@ PrefabInstance:
       propertyPath: deathEffect
       value: 
       objectReference: {fileID: 8983516140579889374, guid: 6c5b8a6ff3e5d9c49bfce4914a55b245, type: 3}
+    - target: {fileID: 4990881040082672466, guid: efa66061bf8ef3342a330c51015331bb, type: 3}
+      propertyPath: attackDamage
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4990881040082672466, guid: efa66061bf8ef3342a330c51015331bb, type: 3}
+      propertyPath: attackCooldown
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5297987845251490557, guid: efa66061bf8ef3342a330c51015331bb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -51201,6 +51225,14 @@ PrefabInstance:
       propertyPath: deathEffect
       value: 
       objectReference: {fileID: 8983516140579889374, guid: 6c5b8a6ff3e5d9c49bfce4914a55b245, type: 3}
+    - target: {fileID: 4990881040082672466, guid: efa66061bf8ef3342a330c51015331bb, type: 3}
+      propertyPath: attackDamage
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4990881040082672466, guid: efa66061bf8ef3342a330c51015331bb, type: 3}
+      propertyPath: attackCooldown
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5297987845251490557, guid: efa66061bf8ef3342a330c51015331bb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -66195,6 +66227,14 @@ PrefabInstance:
       propertyPath: deathEffect
       value: 
       objectReference: {fileID: 8983516140579889374, guid: 6c5b8a6ff3e5d9c49bfce4914a55b245, type: 3}
+    - target: {fileID: 4990881040082672466, guid: efa66061bf8ef3342a330c51015331bb, type: 3}
+      propertyPath: attackDamage
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4990881040082672466, guid: efa66061bf8ef3342a330c51015331bb, type: 3}
+      propertyPath: attackCooldown
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5297987845251490557, guid: efa66061bf8ef3342a330c51015331bb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

@@ -288,6 +288,12 @@ public class Enemy : MonoBehaviour, IDamageable
     [SerializeField] private float detectionRadius = 15f;
     [SerializeField] private float stoppingDistance = 1.5f;
 
+    [Header("Ближний бой (атака игрока)")]
+    [SerializeField] private float attackRange = 2f; // на каком расстоянии враг может атаковать
+    [SerializeField] private int attackDamage = 10;
+    [SerializeField] private float attackCooldown = 1.5f; // время между ударами
+    private float attackTimer;
+
     [Header("Обновление пути")]
     [SerializeField] private float pathUpdateRate = 0.2f;
 
@@ -297,15 +303,19 @@ public class Enemy : MonoBehaviour, IDamageable
     private float timeSinceLastValidPath;
 
     [Header("Реакция на урон")]
-    [SerializeField] private Animator animator;
+    [SerializeField] private Animator animator; // триггеры "Hit", "Die", "Attack"
     [SerializeField] private GameObject deathEffect;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip hitSound;
     [SerializeField] private AudioClip deathSound;
+    [SerializeField] private AudioClip attackSound;
 
     [Header("Мигание при уроне")]
     [SerializeField] private Color flashColor = Color.white;
     [SerializeField] private float flashDuration = 1f;
+
+    [Header("Диагностика")]
+    [SerializeField] private bool debugLogs = false;
 
     private NavMeshAgent agent;
     private float pathUpdateTimer;
@@ -357,6 +367,8 @@ public class Enemy : MonoBehaviour, IDamageable
                 UpdateChaseTarget();
                 pathUpdateTimer = pathUpdateRate;
             }
+
+            HandleAttack(distanceToPlayer);
         }
         else
         {
@@ -378,6 +390,49 @@ public class Enemy : MonoBehaviour, IDamageable
             if (timeSinceLastValidPath >= loseTargetTime)
             {
                 // Враг остаётся на последней известной точке и просто ждёт
+            }
+        }
+    }
+
+    private void HandleAttack(float distanceToPlayer)
+    {
+        attackTimer -= Time.deltaTime;
+
+        if (distanceToPlayer > attackRange) return;
+        if (attackTimer > 0f) return;
+
+        Attack();
+        attackTimer = attackCooldown;
+    }
+
+    private void Attack()
+    {
+        if (debugLogs) Debug.Log($"[{name}] Атака игрока!");
+
+        // Поворот к игроку перед атакой
+        Vector3 lookDirection = (player.position - transform.position);
+        lookDirection.y = 0f;
+        if (lookDirection != Vector3.zero)
+            transform.rotation = Quaternion.LookRotation(lookDirection);
+
+        if (animator != null)
+            animator.SetTrigger("Attack");
+
+        if (audioSource != null && attackSound != null)
+            audioSource.PlayOneShot(attackSound);
+
+        // Проверяем, что игрок всё ещё в радиусе атаки в момент удара (на случай если отбежал за кулдаун)
+        float currentDistance = Vector3.Distance(transform.position, player.position);
+        if (currentDistance <= attackRange)
+        {
+            PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
+            if (playerHealth != null)
+            {
+                playerHealth.TakeDamage(attackDamage);
+            }
+            else if (debugLogs)
+            {
+                Debug.LogWarning($"[{name}] На игроке нет компонента PlayerHealth!");
             }
         }
     }
@@ -449,5 +504,8 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
+
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 }
