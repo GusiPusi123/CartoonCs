@@ -3,11 +3,13 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerDash : MonoBehaviour
 {
-    [Header("Камера (для направления рывка)")]
+    [Header("Ссылки")]
     [SerializeField] private Transform cameraTransform;
+    [SerializeField] private PlayerMovement playerMovement; // нужен, чтобы узнать, стоит ли игрок на земле
 
     [Header("Параметры рывка")]
-    [SerializeField] private float dashSpeed = 20f; // скорость во время рывка (не импульс, а именно скорость)
+    [SerializeField] private float dashSpeed = 40f;
+    [SerializeField] private float airDashMultiplier = 0.6f; // во сколько раз слабее рывок в воздухе (1 = как на земле, 0.5 = вдвое слабее)
     [SerializeField] private float dashDuration = 0.2f;
     [SerializeField] private float dashCooldown = 1f;
 
@@ -28,6 +30,7 @@ public class PlayerDash : MonoBehaviour
     private bool isDashing;
     private float dashTimer;
     private Vector3 dashDirection;
+    private float currentDashSpeed;
 
     private void Awake()
     {
@@ -36,6 +39,11 @@ public class PlayerDash : MonoBehaviour
         if (cameraTransform == null && Camera.main != null)
         {
             cameraTransform = Camera.main.transform;
+        }
+
+        if (playerMovement == null)
+        {
+            playerMovement = GetComponent<PlayerMovement>();
         }
     }
 
@@ -54,18 +62,16 @@ public class PlayerDash : MonoBehaviour
             if (dashTimer <= 0f)
             {
                 isDashing = false;
-                if (debugLogs) Debug.Log($"[{name}] Рывок закончен");
+                if (debugLogs) Debug.Log($"[{name}] Рывок закончен, скорость на выходе: {rb.velocity.magnitude:F1}");
             }
         }
     }
 
-    // Используем FixedUpdate, так как работаем с физикой (Rigidbody)
     private void FixedUpdate()
     {
         if (isDashing)
         {
-            // Каждый физический кадр принудительно задаём скорость — трение не успевает её погасить
-            rb.velocity = new Vector3(dashDirection.x * dashSpeed, rb.velocity.y, dashDirection.z * dashSpeed);
+            rb.velocity = new Vector3(dashDirection.x * currentDashSpeed, rb.velocity.y, dashDirection.z * currentDashSpeed);
         }
     }
 
@@ -86,6 +92,11 @@ public class PlayerDash : MonoBehaviour
         direction.Normalize();
 
         dashDirection = direction;
+
+        // Определяем силу рывка в зависимости от того, в воздухе игрок или на земле
+        bool isGrounded = playerMovement != null && playerMovement.grounded;
+        currentDashSpeed = isGrounded ? dashSpeed : dashSpeed * airDashMultiplier;
+
         dashTimer = dashDuration;
         isDashing = true;
         cooldownTimer = dashCooldown;
@@ -101,8 +112,7 @@ public class PlayerDash : MonoBehaviour
 
         if (debugLogs)
         {
-            Debug.Log($"[{name}] Рывок начат, направление: {dashDirection}");
-            Debug.DrawRay(transform.position, dashDirection * 5f, Color.red, 1f);
+            Debug.Log($"[{name}] Рывок начат. Grounded: {isGrounded}, скорость рывка: {currentDashSpeed:F1}, направление: {dashDirection}");
         }
     }
 
