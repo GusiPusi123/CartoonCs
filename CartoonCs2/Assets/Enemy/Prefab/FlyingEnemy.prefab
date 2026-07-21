@@ -434,9 +434,9 @@ GameObject:
   - component: {fileID: 7672791607034034716}
   - component: {fileID: 7182511261819861641}
   - component: {fileID: 1698390196191801430}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: FlyingEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -515,7 +515,7 @@ MonoBehaviour:
   explosionDamageMask:
     serializedVersion: 2
     m_Bits: 128
-  explosionEffect: {fileID: 0}
+  explosionEffect: {fileID: 7438787133187006634, guid: 822d5569d3a83354cbdc5b2d1feecf2f, type: 3}
   audioSource: {fileID: 0}
   explosionSound: {fileID: 0}
   hitSound: {fileID: 0}
