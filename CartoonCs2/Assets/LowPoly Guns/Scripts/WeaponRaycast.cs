@@ -6,23 +6,16 @@ public class WeaponRaycast : MonoBehaviour
     [SerializeField] private bool debugLogs = false;
 
     [Header("Точки на оружии")]
-    [SerializeField] private Transform firePoint; // дуло — откуда летит визуальная пуля и рейкаст
-    [SerializeField] private Transform shellEjectPoint; // точка вылета гильзы (необязательно)
-    [SerializeField] private Camera playerCamera; // камера игрока — рейкаст обычно стреляет из центра экрана, а не из дула
+    [SerializeField] private Transform firePoint;
+    [SerializeField] private Transform shellEjectPoint;
+    [SerializeField] private Camera playerCamera;
 
     [Header("Стрельба")]
     [SerializeField] private int damage = 20;
     [SerializeField] private float range = 100f;
-    [SerializeField] private float fireRate = 8f; // выстрелов в секунду
-    [SerializeField] private bool isAutomatic = true; // зажатие ЛКМ или клик каждый раз
-    [SerializeField] private LayerMask hitMask; // что может быть поражено (не забудь включить слои Enemy и Environment)
-
-    [Header("Разброс (Spread)")]
-    [SerializeField] private float baseSpread = 0.5f; // угол разброса в градусах в состоянии покоя
-    [SerializeField] private float maxSpread = 4f; // максимальный разброс при долгой стрельбе
-    [SerializeField] private float spreadIncreasePerShot = 0.3f; // насколько растёт разброс с каждым выстрелом
-    [SerializeField] private float spreadRecoverySpeed = 3f; // как быстро разброс восстанавливается после отпускания кнопки
-    private float currentSpread;
+    [SerializeField] private float fireRate = 8f;
+    [SerializeField] private bool isAutomatic = true;
+    [SerializeField] private LayerMask hitMask;
 
     [Header("Боезапас")]
     [SerializeField] private int magazineSize = 30;
@@ -32,32 +25,33 @@ public class WeaponRaycast : MonoBehaviour
     private bool isReloading;
 
     [Header("Визуальная пуля (трассер)")]
-    [SerializeField] private GameObject bulletTracerPrefab; // объект с TrailRenderer или простой цилиндр/спрайт
-    [SerializeField] private float tracerSpeed = 150f; // скорость полёта визуальной пули к точке попадания
-    [SerializeField] private bool useInstantTracer = false; // true = трассер сразу линия до цели, false = летящий объект
+    [SerializeField] private GameObject bulletTracerPrefab;
+    [SerializeField] private float tracerSpeed = 150f;
+    [SerializeField] private bool useInstantTracer = false;
 
     [Header("Эффекты выстрела")]
     [SerializeField] private GameObject muzzleFlashEffect;
     [SerializeField] private GameObject shellCasingPrefab;
     [SerializeField] private float shellEjectForce = 2f;
     [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip[] fireSounds; // массив — можно чередовать звуки для вариативности
-    [SerializeField] private AudioClip emptySound; // клик при пустом магазине
+    [SerializeField] private AudioClip[] fireSounds;
+    [SerializeField] private AudioClip emptySound;
     [SerializeField] private AudioClip reloadSound;
 
     [Header("Эффекты попадания")]
-    [SerializeField] private GameObject defaultImpactEffect; // искры/пыль по умолчанию (стены, пол)
-    [SerializeField] private GameObject enemyImpactEffect; // кровь/особый эффект при попадании во врага
+    [SerializeField] private GameObject defaultImpactEffect;
+    [SerializeField] private GameObject enemyImpactEffect;
     [SerializeField] private float impactEffectLifetime = 2f;
 
     [Header("Отдача камеры")]
-    [SerializeField] private float recoilAmount = 1.5f; // на сколько градусов "подбрасывает" камеру за выстрел
+    [SerializeField] private float recoilAmount = 1.5f;
     [SerializeField] private float recoilRecoverySpeed = 8f;
+    [SerializeField] private float recoilSnapSpeed = 20f; // насколько резко камера "подскакивает" в момент выстрела
     private float currentRecoil;
     private float targetRecoil;
 
     [Header("Анимация")]
-    [SerializeField] private Animator animator; // триггеры "Fire", "Reload"
+    [SerializeField] private Animator animator;
 
     private float fireCooldown;
 
@@ -74,7 +68,11 @@ public class WeaponRaycast : MonoBehaviour
         fireCooldown -= Time.deltaTime;
 
         HandleInput();
-        HandleSpreadRecovery();
+    }
+
+    // Recoil применяется в LateUpdate, чтобы гарантированно сработать ПОСЛЕ поворота камеры мышью (Look() в PlayerMovement)
+    private void LateUpdate()
+    {
         HandleRecoilRecovery();
     }
 
@@ -82,7 +80,8 @@ public class WeaponRaycast : MonoBehaviour
     {
         if (isReloading) return;
 
-        bool wantsToFire = isAutomatic ? Input.GetButton("Fire1") : Input.GetButtonDown("Fire1");
+        // Проверяем именно кнопку мыши напрямую, а не ось "Fire1" — она в Unity по умолчанию завязана ещё и на Left Ctrl
+        bool wantsToFire = isAutomatic ? Input.GetMouseButton(0) : Input.GetMouseButtonDown(0);
 
         if (wantsToFire && fireCooldown <= 0f)
         {
@@ -94,7 +93,7 @@ public class WeaponRaycast : MonoBehaviour
             else
             {
                 PlayEmptySound();
-                fireCooldown = 0.3f; // защита от спама клика на пустом магазине
+                fireCooldown = 0.3f;
             }
         }
 
@@ -109,7 +108,7 @@ public class WeaponRaycast : MonoBehaviour
         currentAmmo--;
 
         Vector3 origin = playerCamera.transform.position;
-        Vector3 direction = ApplySpread(playerCamera.transform.forward);
+        Vector3 direction = playerCamera.transform.forward; // без разброса — всегда строго по центру камеры
 
         if (animator != null)
             animator.SetTrigger("Fire");
@@ -118,8 +117,6 @@ public class WeaponRaycast : MonoBehaviour
         SpawnMuzzleFlash();
         EjectShell();
 
-        // Увеличиваем разброс и отдачу с каждым выстрелом
-        currentSpread = Mathf.Min(currentSpread + spreadIncreasePerShot, maxSpread);
         targetRecoil += recoilAmount;
 
         if (Physics.Raycast(origin, direction, out RaycastHit hit, range, hitMask))
@@ -132,7 +129,6 @@ public class WeaponRaycast : MonoBehaviour
         }
         else
         {
-            // Ничего не задели — трассер летит в пустоту на максимальную дальность
             Vector3 missPoint = origin + direction * range;
             SpawnTracer(missPoint);
 
@@ -141,27 +137,14 @@ public class WeaponRaycast : MonoBehaviour
         }
     }
 
-    private Vector3 ApplySpread(Vector3 baseDirection)
-    {
-        float totalSpread = baseSpread + currentSpread;
-
-        float spreadX = Random.Range(-totalSpread, totalSpread);
-        float spreadY = Random.Range(-totalSpread, totalSpread);
-
-        Quaternion spreadRotation = Quaternion.Euler(spreadY, spreadX, 0f);
-        return spreadRotation * baseDirection;
-    }
-
     private void HandleHit(RaycastHit hit)
     {
-        // Наносим урон, если попали во что-то с IDamageable
         IDamageable damageable = hit.collider.GetComponent<IDamageable>();
         if (damageable != null)
         {
             damageable.TakeDamage(damage);
         }
 
-        // Разные эффекты попадания — по врагу или по окружению
         GameObject effectToSpawn = defaultImpactEffect;
 
         if (hit.collider.CompareTag("Enemy") && enemyImpactEffect != null)
@@ -175,7 +158,6 @@ public class WeaponRaycast : MonoBehaviour
             Destroy(impact, impactEffectLifetime);
         }
 
-        // Физический импульс в объект, если у него есть Rigidbody (для лёгких предметов/тряпичных кукол)
         if (hit.rigidbody != null)
         {
             hit.rigidbody.AddForceAtPosition(-hit.normal * 5f, hit.point, ForceMode.Impulse);
@@ -190,7 +172,6 @@ public class WeaponRaycast : MonoBehaviour
 
         if (useInstantTracer)
         {
-            // Мгновенная линия — просто растягиваем LineRenderer, если он есть на префабе
             LineRenderer line = tracer.GetComponent<LineRenderer>();
             if (line != null)
             {
@@ -290,29 +271,17 @@ public class WeaponRaycast : MonoBehaviour
         if (debugLogs) Debug.Log($"[{name}] Перезарядка завершена. Патроны: {currentAmmo}/{reserveAmmo}");
     }
 
-    private void HandleSpreadRecovery()
-    {
-        if (currentSpread > 0f)
-        {
-            currentSpread = Mathf.Max(0f, currentSpread - spreadRecoverySpeed * Time.deltaTime);
-        }
-    }
-
     private void HandleRecoilRecovery()
     {
-        // Плавно "подбрасываем" камеру к targetRecoil, потом плавно возвращаем обратно
-        currentRecoil = Mathf.Lerp(currentRecoil, targetRecoil, Time.deltaTime * 20f);
+        currentRecoil = Mathf.Lerp(currentRecoil, targetRecoil, Time.deltaTime * recoilSnapSpeed);
         targetRecoil = Mathf.Lerp(targetRecoil, 0f, Time.deltaTime * recoilRecoverySpeed);
 
         if (playerCamera != null)
         {
-            // Применяем небольшой локальный поворот вверх — если у тебя есть отдельный скрипт Look(),
-            // этот recoil стоит либо суммировать с ним, либо применять на дочерний объект камеры, а не сам transform
             playerCamera.transform.localRotation = Quaternion.Euler(-currentRecoil, 0f, 0f) * playerCamera.transform.localRotation;
         }
     }
 
-    // Публичные геттеры для UI (счётчик патронов, индикатор перезарядки)
     public int CurrentAmmo => currentAmmo;
     public int ReserveAmmo => reserveAmmo;
     public bool IsReloading => isReloading;
