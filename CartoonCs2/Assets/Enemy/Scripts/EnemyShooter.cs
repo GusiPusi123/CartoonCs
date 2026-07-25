@@ -87,6 +87,12 @@ public class EnemyShooter : MonoBehaviour, IDamageable
             if (playerObj != null)
                 player = playerObj.transform;
         }
+        // if (aimTarget == null)
+        // {
+        //     // GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        //     if (aimTarget != null)
+        //         aimTarget = aimTarget.transform;
+        // }
 
         if (firePoint == null)
             firePoint = transform;

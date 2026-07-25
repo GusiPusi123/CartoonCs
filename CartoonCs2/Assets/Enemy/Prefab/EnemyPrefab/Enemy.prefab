@@ -5055,7 +5055,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6941202424255747151}
   serializedVersion: 4
-  m_Mass: 5
+  m_Mass: 60
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -5071,7 +5071,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &4990881040082672466
@@ -5091,16 +5091,21 @@ MonoBehaviour:
   chaseSpeed: 5
   detectionRadius: 100
   stoppingDistance: 1.5
+  attackRange: 2
+  attackDamage: 5
+  attackCooldown: 1
   pathUpdateRate: 0.2
   navMeshSampleRadius: 5
   loseTargetTime: 3
   animator: {fileID: 0}
-  deathEffect: {fileID: 0}
+  deathEffect: {fileID: 8983516140579889374, guid: 6c5b8a6ff3e5d9c49bfce4914a55b245, type: 3}
   audioSource: {fileID: 0}
   hitSound: {fileID: 0}
   deathSound: {fileID: 0}
+  attackSound: {fileID: 0}
   flashColor: {r: 1, g: 1, b: 1, a: 1}
   flashDuration: 0.1
+  debugLogs: 0
 --- !u!195 &1698109941898636037
 NavMeshAgent:
   m_ObjectHideFlags: 0

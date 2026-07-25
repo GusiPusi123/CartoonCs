@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemPrefabs:
   - {fileID: 4280524290095666275, guid: 806a75b2f0b8f2f409a5a878f043b95b, type: 3}
-  itemCount: 10
+  itemCount: 5
   randomPrefab: 0
   minForce: 2
   maxForce: 5
