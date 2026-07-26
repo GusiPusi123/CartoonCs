@@ -424,6 +424,8 @@ public class WeaponRaycast : MonoBehaviour, IAmmoMagazine, IWeaponSwitchable
 
     [Header("Анимация")]
     [SerializeField] private Animator animator;
+    [Tooltip("Имя состояния простоя в Animator Controller — используется, чтобы сбросить позу оружия при его уборке во время перезарядки/стрельбы")]
+    [SerializeField] private string idleStateName = "Idle";
 
     private float fireCooldown;
 
@@ -705,6 +707,14 @@ public class WeaponRaycast : MonoBehaviour, IAmmoMagazine, IWeaponSwitchable
         // Оружие снова в руках — ничего сбрасывать не нужно,
         // currentAmmo уже хранит то количество патронов, которое было при последней уборке.
         fireCooldown = 0f;
+
+        // На всякий случай гасим любые триггеры, которые могли остаться "висеть"
+        // с прошлого раза, пока оружие было спрятано.
+        if (animator != null)
+        {
+            animator.ResetTrigger("Fire");
+            animator.ResetTrigger("Reload");
+        }
     }
 
     public void OnUnequip()
@@ -721,6 +731,23 @@ public class WeaponRaycast : MonoBehaviour, IAmmoMagazine, IWeaponSwitchable
 
             if (debugLogs)
                 Debug.Log($"[{name}] Перезарядка прервана сменой оружия. Патроны остались: {currentAmmo}/{magazineSize}");
+        }
+
+        // Сбрасываем Animator в состояние простоя, иначе он "замрёт" на том кадре
+        // перезарядки/выстрела, на котором оружие было выключено, и при повторном
+        // включении объект окажется в этой же неправильной позе.
+        if (animator != null && !string.IsNullOrEmpty(idleStateName))
+        {
+            animator.ResetTrigger("Fire");
+            animator.ResetTrigger("Reload");
+            animator.Play(idleStateName, 0, 0f);
+
+            // Play() сам по себе только меняет состояние — реальный пересчёт костей
+            // происходит на следующем Update аниматора. Но объект сейчас выключается
+            // (SetActive(false) в WeaponSwitcher вызывается сразу после этого метода),
+            // поэтому этот Update никогда не произойдёт. Форсируем пересчёт вручную,
+            // ПОКА объект ещё активен, чтобы поза Idle реально применилась к костям.
+            animator.Update(0f);
         }
     }
 }
