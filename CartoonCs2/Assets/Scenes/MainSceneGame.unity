@@ -65580,6 +65580,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1458530735}
     - target: {fileID: 5488216362518601240, guid: ce2e21754406bb8468648bebdaa22ea1, type: 3}
+      propertyPath: tracerSpeed
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 5488216362518601240, guid: ce2e21754406bb8468648bebdaa22ea1, type: 3}
       propertyPath: playerCamera
       value: 
       objectReference: {fileID: 247471530}
@@ -65664,9 +65668,45 @@ PrefabInstance:
     m_TransformParent: {fileID: 271265346}
     m_Modifications:
     - target: {fileID: 2302473512540922558, guid: f1618387a5eb8014993e72b67a456787, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 4227546234063139548}
+    - target: {fileID: 2302473512540922558, guid: f1618387a5eb8014993e72b67a456787, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 1458530735}
+    - target: {fileID: 2302473512540922558, guid: f1618387a5eb8014993e72b67a456787, type: 3}
+      propertyPath: tracerSpeed
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 2302473512540922558, guid: f1618387a5eb8014993e72b67a456787, type: 3}
       propertyPath: playerCamera
       value: 
       objectReference: {fileID: 247471530}
+    - target: {fileID: 2302473512540922558, guid: f1618387a5eb8014993e72b67a456787, type: 3}
+      propertyPath: muzzleFlashEffect
+      value: 
+      objectReference: {fileID: 2674818797047540904, guid: 4f8a45a657e9ce6449fc552ecc8a55fe, type: 3}
+    - target: {fileID: 2302473512540922558, guid: f1618387a5eb8014993e72b67a456787, type: 3}
+      propertyPath: fireSounds.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2302473512540922558, guid: f1618387a5eb8014993e72b67a456787, type: 3}
+      propertyPath: useFullReloadWhenEmpty
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2302473512540922558, guid: f1618387a5eb8014993e72b67a456787, type: 3}
+      propertyPath: fireSounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 45eeaedb65b29934381795e07c9ad4d9, type: 3}
+    - target: {fileID: 2302473512540922558, guid: f1618387a5eb8014993e72b67a456787, type: 3}
+      propertyPath: fireSounds.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: f4f69cfc4f5e03d4baaf4a972d838a84, type: 3}
+    - target: {fileID: 2302473512540922558, guid: f1618387a5eb8014993e72b67a456787, type: 3}
+      propertyPath: allowFireToInterruptReload
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3139197313328301227, guid: f1618387a5eb8014993e72b67a456787, type: 3}
       propertyPath: ammoText
       value: 
@@ -65719,10 +65759,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4304074450602625971, guid: f1618387a5eb8014993e72b67a456787, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7038591753752984044, guid: f1618387a5eb8014993e72b67a456787, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4227546234063139548}
   m_SourcePrefab: {fileID: 100100000, guid: f1618387a5eb8014993e72b67a456787, type: 3}
 --- !u!4 &414237344804842449 stripped
 Transform:
@@ -65745,6 +65789,10 @@ PrefabInstance:
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 1458530735}
+    - target: {fileID: 1732853458998486729, guid: 3c095d47ed1ecf24496bbeb5be0ff716, type: 3}
+      propertyPath: tracerSpeed
+      value: 120
+      objectReference: {fileID: 0}
     - target: {fileID: 1732853458998486729, guid: 3c095d47ed1ecf24496bbeb5be0ff716, type: 3}
       propertyPath: playerCamera
       value: 
@@ -66034,6 +66082,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1458530735}
     - target: {fileID: 6616600501065054360, guid: 709551a10827c0f46a9f4be9f09634f4, type: 3}
+      propertyPath: tracerSpeed
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 6616600501065054360, guid: 709551a10827c0f46a9f4be9f09634f4, type: 3}
       propertyPath: playerCamera
       value: 
       objectReference: {fileID: 247471530}
@@ -66166,6 +66218,27 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7038591753752984044, guid: f1618387a5eb8014993e72b67a456787, type: 3}
   m_PrefabInstance: {fileID: 312031253632648757}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &4227546234063139548
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4227546234063139547}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9761cbe100cbfc64d9dbfea0b0f42f04, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &4553305334838158718
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -66230,6 +66303,10 @@ PrefabInstance:
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 1458530735}
+    - target: {fileID: 5608452359268647609, guid: 29f40c18f139c2a4e92d4769b79930c8, type: 3}
+      propertyPath: tracerSpeed
+      value: 120
+      objectReference: {fileID: 0}
     - target: {fileID: 5608452359268647609, guid: 29f40c18f139c2a4e92d4769b79930c8, type: 3}
       propertyPath: playerCamera
       value: 
@@ -66414,6 +66491,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1458530735}
     - target: {fileID: 1872829734411093882, guid: 3ea6be4a16c346f4e8c91d95f84ba3e9, type: 3}
+      propertyPath: tracerSpeed
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 1872829734411093882, guid: 3ea6be4a16c346f4e8c91d95f84ba3e9, type: 3}
       propertyPath: playerCamera
       value: 
       objectReference: {fileID: 247471530}
@@ -66509,6 +66590,10 @@ PrefabInstance:
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 1458530735}
+    - target: {fileID: 3735571809409264074, guid: a698b258a65979f49a34a644dc2d8251, type: 3}
+      propertyPath: tracerSpeed
+      value: 120
+      objectReference: {fileID: 0}
     - target: {fileID: 3735571809409264074, guid: a698b258a65979f49a34a644dc2d8251, type: 3}
       propertyPath: playerCamera
       value: 
@@ -66746,6 +66831,10 @@ PrefabInstance:
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 1458530735}
+    - target: {fileID: 2053616761301569210, guid: 5c920052dae1b8a4e940e75bcd40ab7e, type: 3}
+      propertyPath: tracerSpeed
+      value: 120
+      objectReference: {fileID: 0}
     - target: {fileID: 2053616761301569210, guid: 5c920052dae1b8a4e940e75bcd40ab7e, type: 3}
       propertyPath: magazineSize
       value: 10

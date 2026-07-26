@@ -35,28 +35,10 @@ public class ShotgunWeapon : MonoBehaviour, IAmmoMagazine, IWeaponSwitchable
     private bool isReloading;
     private Coroutine reloadCoroutine;
 
-    [Header("Перезарядка — по одному снаряду")]
-    [Tooltip("Сколько времени занимает вставка ОДНОГО патрона")]
-    [SerializeField] private float singleShellReloadTime = 0.55f;
-    [SerializeField] private string singleShellAnimTrigger = "ReloadShell";
-    [SerializeField] private AudioClip singleShellSound;
-
-    [Header("Перезарядка — вся обойма разом (когда магазин полностью пуст)")]
-    [Tooltip("Если магазин ПОЛНОСТЬЮ пуст — вместо цикла по одному патрону играется отдельная анимация полной перезарядки")]
-    [SerializeField] private bool useFullReloadWhenEmpty = true;
-    [SerializeField] private float fullMagazineReloadTime = 2.2f;
-    [SerializeField] private string fullMagazineAnimTrigger = "ReloadFull";
-    [SerializeField] private AudioClip fullMagazineSound;
-
-    [Header("Передёргивание после перезарядки по одному (помпа)")]
-    [Tooltip("Проигрывается один раз ПОСЛЕ того как вставлены все недостающие патроны в цикле по одному")]
-    [SerializeField] private string pumpAnimTrigger = "Pump";
-    [SerializeField] private float pumpDuration = 0.35f;
-    [SerializeField] private AudioClip pumpSound;
-
-    [Header("Прерывание перезарядки выстрелом")]
-    [Tooltip("Если игрок стреляет во время перезарядки по одному патрону — перезарядка прерывается и оружие сразу стреляет тем, что успело зарядиться (классика для помповых дробовиков)")]
-    [SerializeField] private bool allowFireToInterruptReload = true;
+    [Header("Перезарядка — вся обойма разом")]
+    [SerializeField] private float reloadTime = 1.6f;
+    [SerializeField] private string reloadAnimTrigger = "Reload";
+    [SerializeField] private AudioClip reloadSound;
 
     [Header("Визуальная пуля (трассер)")]
     [SerializeField] private GameObject bulletTracerPrefab;
@@ -111,21 +93,9 @@ public class ShotgunWeapon : MonoBehaviour, IAmmoMagazine, IWeaponSwitchable
 
     private void HandleInput()
     {
-        bool wantsToFire = Input.GetMouseButtonDown(0);
+        if (isReloading) return;
 
-        if (isReloading)
-        {
-            // Прерывание перезарядки выстрелом (только пока идёт цикл "по одному патрону",
-            // при полной перезарядке прерывать нельзя — обойма/магазин ещё физически не на месте)
-            if (wantsToFire && allowFireToInterruptReload && currentAmmo > 0 && !currentlyDoingFullReload)
-            {
-                InterruptReload();
-                TryFire();
-            }
-            return;
-        }
-
-        if (wantsToFire)
+        if (Input.GetMouseButtonDown(0))
         {
             TryFire();
         }
@@ -296,78 +266,24 @@ public class ShotgunWeapon : MonoBehaviour, IAmmoMagazine, IWeaponSwitchable
             audioSource.PlayOneShot(emptySound);
     }
 
-    private bool currentlyDoingFullReload;
-
     private IEnumerator Reload()
     {
         isReloading = true;
-        currentlyDoingFullReload = useFullReloadWhenEmpty && currentAmmo == 0;
 
-        if (currentlyDoingFullReload)
-        {
-            if (animator != null && !string.IsNullOrEmpty(fullMagazineAnimTrigger))
-                animator.SetTrigger(fullMagazineAnimTrigger);
+        if (animator != null && !string.IsNullOrEmpty(reloadAnimTrigger))
+            animator.SetTrigger(reloadAnimTrigger);
 
-            if (audioSource != null && fullMagazineSound != null)
-                audioSource.PlayOneShot(fullMagazineSound);
+        if (audioSource != null && reloadSound != null)
+            audioSource.PlayOneShot(reloadSound);
 
-            if (debugLogs) Debug.Log($"[{name}] Полная перезарядка обоймы...");
+        if (debugLogs) Debug.Log($"[{name}] Перезарядка обоймы...");
 
-            yield return new WaitForSeconds(fullMagazineReloadTime);
+        yield return new WaitForSeconds(reloadTime);
 
-            currentAmmo = magazineSize;
-        }
-        else
-        {
-            while (currentAmmo < magazineSize)
-            {
-                if (animator != null && !string.IsNullOrEmpty(singleShellAnimTrigger))
-                    animator.SetTrigger(singleShellAnimTrigger);
-
-                if (audioSource != null && singleShellSound != null)
-                    audioSource.PlayOneShot(singleShellSound);
-
-                if (debugLogs) Debug.Log($"[{name}] Вставка патрона {currentAmmo + 1}/{magazineSize}...");
-
-                yield return new WaitForSeconds(singleShellReloadTime);
-
-                currentAmmo++;
-            }
-
-            if (!string.IsNullOrEmpty(pumpAnimTrigger))
-            {
-                if (animator != null)
-                    animator.SetTrigger(pumpAnimTrigger);
-
-                if (audioSource != null && pumpSound != null)
-                    audioSource.PlayOneShot(pumpSound);
-
-                yield return new WaitForSeconds(pumpDuration);
-            }
-        }
-
+        currentAmmo = magazineSize;
         isReloading = false;
-        currentlyDoingFullReload = false;
 
         if (debugLogs) Debug.Log($"[{name}] Перезарядка завершена: {currentAmmo}/{magazineSize}");
-    }
-
-    private void InterruptReload()
-    {
-        if (reloadCoroutine != null)
-            StopCoroutine(reloadCoroutine);
-
-        isReloading = false;
-        currentlyDoingFullReload = false;
-
-        if (animator != null)
-        {
-            animator.ResetTrigger(singleShellAnimTrigger);
-            animator.ResetTrigger(pumpAnimTrigger);
-        }
-
-        if (debugLogs)
-            Debug.Log($"[{name}] Перезарядка прервана выстрелом. Патронов сейчас: {currentAmmo}/{magazineSize}");
     }
 
     private void HandleRecoilRecovery()
@@ -395,9 +311,7 @@ public class ShotgunWeapon : MonoBehaviour, IAmmoMagazine, IWeaponSwitchable
         if (animator != null)
         {
             animator.ResetTrigger(fireAnimTrigger);
-            animator.ResetTrigger(singleShellAnimTrigger);
-            animator.ResetTrigger(fullMagazineAnimTrigger);
-            animator.ResetTrigger(pumpAnimTrigger);
+            animator.ResetTrigger(reloadAnimTrigger);
         }
     }
 
@@ -409,7 +323,6 @@ public class ShotgunWeapon : MonoBehaviour, IAmmoMagazine, IWeaponSwitchable
                 StopCoroutine(reloadCoroutine);
 
             isReloading = false;
-            currentlyDoingFullReload = false;
 
             if (debugLogs)
                 Debug.Log($"[{name}] Перезарядка прервана сменой оружия. Патроны остались: {currentAmmo}/{magazineSize}");
@@ -418,11 +331,10 @@ public class ShotgunWeapon : MonoBehaviour, IAmmoMagazine, IWeaponSwitchable
         if (animator != null && !string.IsNullOrEmpty(idleStateName))
         {
             animator.ResetTrigger(fireAnimTrigger);
-            animator.ResetTrigger(singleShellAnimTrigger);
-            animator.ResetTrigger(fullMagazineAnimTrigger);
-            animator.ResetTrigger(pumpAnimTrigger);
+            animator.ResetTrigger(reloadAnimTrigger);
             animator.Play(idleStateName, 0, 0f);
             animator.Update(0f);
         }
     }
 }
+
