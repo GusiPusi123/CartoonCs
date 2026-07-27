@@ -58,7 +58,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 768
   magazineSize: 25
-  reserveAmmo: 100000
   reloadTime: 1.4
   bulletTracerPrefab: {fileID: 1642549959154380408, guid: c35f573c7552c754695ccf1246b2934c, type: 3}
   tracerSpeed: 60
@@ -76,7 +75,10 @@ MonoBehaviour:
   recoilAmount: 1.5
   recoilRecoverySpeed: 8
   recoilSnapSpeed: 20
+  moveOffsetAmount: 0.2
+  moveSmoothTime: 0.1
   animator: {fileID: 6331856929080061256}
+  idleStateName: Idle
 --- !u!95 &6331856929080061256
 Animator:
   serializedVersion: 5
@@ -122,8 +124,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 351899964540384928}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.0006500006, y: 0.0850875, z: -0.0223375}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
