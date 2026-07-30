@@ -27176,6 +27176,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6526899840674656900, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
   m_PrefabInstance: {fileID: 7736245600617623236}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &717883726 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6447370217069513581, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+  m_PrefabInstance: {fileID: 7736245600617623236}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f99f195cd74bcb74aa07066b309afba8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &725566884
 Mesh:
   m_ObjectHideFlags: 0
@@ -52986,6 +52997,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1822460281}
   - component: {fileID: 1822460282}
+  - component: {fileID: 1822460283}
   m_Layer: 0
   m_Name: SpawnPointAll
   m_TagString: Untagged
@@ -53074,6 +53086,25 @@ MonoBehaviour:
   onAllWavesComplete:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1822460283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822460280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7751f2b03f266f8469479e1218dea691, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waveManager: {fileID: 1822460282}
+  playerHealth: {fileID: 717883726}
+  healMode: 2
+  fixedHealAmount: 100
+  healPercentage: 0.5
+  healEveryNWaves: 1
+  debugLogs: 0
 --- !u!1 &1839878718
 GameObject:
   m_ObjectHideFlags: 0
@@ -65261,7 +65292,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5488216362518601240, guid: ce2e21754406bb8468648bebdaa22ea1, type: 3}
       propertyPath: range
-      value: 1000
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 5488216362518601240, guid: ce2e21754406bb8468648bebdaa22ea1, type: 3}
       propertyPath: damage
@@ -65386,6 +65417,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 271265346}
     m_Modifications:
+    - target: {fileID: 2302473512540922558, guid: f1618387a5eb8014993e72b67a456787, type: 3}
+      propertyPath: range
+      value: 70
+      objectReference: {fileID: 0}
     - target: {fileID: 2302473512540922558, guid: f1618387a5eb8014993e72b67a456787, type: 3}
       propertyPath: animator
       value: 
@@ -65521,7 +65556,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1732853458998486729, guid: 3c095d47ed1ecf24496bbeb5be0ff716, type: 3}
       propertyPath: range
-      value: 1000
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 1732853458998486729, guid: 3c095d47ed1ecf24496bbeb5be0ff716, type: 3}
       propertyPath: damage
@@ -65888,7 +65923,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6616600501065054360, guid: 709551a10827c0f46a9f4be9f09634f4, type: 3}
       propertyPath: range
-      value: 1000
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 6616600501065054360, guid: 709551a10827c0f46a9f4be9f09634f4, type: 3}
       propertyPath: audioSource
@@ -66233,7 +66268,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5608452359268647609, guid: 29f40c18f139c2a4e92d4769b79930c8, type: 3}
       propertyPath: range
-      value: 1000
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 5608452359268647609, guid: 29f40c18f139c2a4e92d4769b79930c8, type: 3}
       propertyPath: audioSource
@@ -66455,7 +66490,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1872829734411093882, guid: 3ea6be4a16c346f4e8c91d95f84ba3e9, type: 3}
       propertyPath: range
-      value: 1000
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 1872829734411093882, guid: 3ea6be4a16c346f4e8c91d95f84ba3e9, type: 3}
       propertyPath: damage
@@ -66590,7 +66625,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3735571809409264074, guid: a698b258a65979f49a34a644dc2d8251, type: 3}
       propertyPath: range
-      value: 1000
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 3735571809409264074, guid: a698b258a65979f49a34a644dc2d8251, type: 3}
       propertyPath: damage
@@ -66866,7 +66901,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2053616761301569210, guid: 5c920052dae1b8a4e940e75bcd40ab7e, type: 3}
       propertyPath: range
-      value: 1000
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 2053616761301569210, guid: 5c920052dae1b8a4e940e75bcd40ab7e, type: 3}
       propertyPath: audioSource
