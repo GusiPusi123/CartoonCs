@@ -5091,7 +5091,7 @@ MonoBehaviour:
   chaseSpeed: 5
   detectionRadius: 100
   stoppingDistance: 1.5
-  attackRange: 2
+  attackRange: 1.5
   attackDamage: 5
   attackCooldown: 1
   pathUpdateRate: 0.2

@@ -206,6 +206,11 @@ public class ShotgunWeapon : MonoBehaviour, IAmmoMagazine, IWeaponSwitchable
         if (bulletTracerPrefab == null || firePoint == null) return;
 
         GameObject tracer = Instantiate(bulletTracerPrefab, firePoint.position, Quaternion.LookRotation(targetPoint - firePoint.position));
+
+        TrailRenderer trail = tracer.GetComponent<TrailRenderer>();
+        if (trail != null)
+            trail.Clear();
+
         StartCoroutine(MoveTracer(tracer, targetPoint));
     }
 
@@ -286,6 +291,8 @@ public class ShotgunWeapon : MonoBehaviour, IAmmoMagazine, IWeaponSwitchable
         if (debugLogs) Debug.Log($"[{name}] Перезарядка завершена: {currentAmmo}/{magazineSize}");
     }
 
+    private float appliedRecoil;
+
     private void HandleRecoilRecovery()
     {
         currentRecoil = Mathf.Lerp(currentRecoil, targetRecoil, Time.deltaTime * recoilSnapSpeed);
@@ -293,7 +300,9 @@ public class ShotgunWeapon : MonoBehaviour, IAmmoMagazine, IWeaponSwitchable
 
         if (playerCamera != null)
         {
-            playerCamera.transform.localRotation = Quaternion.Euler(-currentRecoil, 0f, 0f) * playerCamera.transform.localRotation;
+            float delta = currentRecoil - appliedRecoil;
+            playerCamera.transform.localRotation = Quaternion.Euler(-delta, 0f, 0f) * playerCamera.transform.localRotation;
+            appliedRecoil = currentRecoil;
         }
     }
 
@@ -337,4 +346,3 @@ public class ShotgunWeapon : MonoBehaviour, IAmmoMagazine, IWeaponSwitchable
         }
     }
 }
-

@@ -207,7 +207,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugLogs: 1
-  maxHealth: 80
+  maxHealth: 60
   player: {fileID: 0}
   aimTarget: {fileID: 0}
   aimHeightOffset: 0.5
@@ -220,7 +220,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 257
   fireRate: 0.3
-  shootRange: 15
+  shootRange: 100
   hitscanDamage: 10
   useProjectile: 1
   projectilePrefab: {fileID: 3302181832061074356, guid: 4b4aeb92fae10fc478062e15e1d035c6, type: 3}

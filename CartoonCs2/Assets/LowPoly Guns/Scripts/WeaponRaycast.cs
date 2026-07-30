@@ -449,8 +449,11 @@ public class WeaponRaycast : MonoBehaviour, IAmmoMagazine, IWeaponSwitchable
     {
         fireCooldown -= Time.deltaTime;
 
-        HandleInput();
+        // Сначала обновляем позицию оружия (sway), и только потом обрабатываем стрельбу —
+        // иначе Fire() в этом кадре использует firePoint из ПРОШЛОГО кадра, что при
+        // быстром движении даёт заметный рассинхрон между дулом и точкой вылета пули.
         HandleWeaponSway();
+        HandleInput();
     }
 
     private void LateUpdate()
@@ -587,6 +590,13 @@ public class WeaponRaycast : MonoBehaviour, IAmmoMagazine, IWeaponSwitchable
 
         GameObject tracer = Instantiate(bulletTracerPrefab, firePoint.position, Quaternion.LookRotation(targetPoint - firePoint.position));
 
+        // TrailRenderer иногда "помнит" точку до того, как объект оказался на нужной позиции,
+        // из-за чего первый кадр рисует шлейф от произвольного места до дула.
+        // Clear() сбрасывает накопленные точки, чтобы шлейф начинался ровно с точки спавна.
+        TrailRenderer trail = tracer.GetComponent<TrailRenderer>();
+        if (trail != null)
+            trail.Clear();
+
         if (useInstantTracer)
         {
             LineRenderer line = tracer.GetComponent<LineRenderer>();
@@ -684,6 +694,8 @@ public class WeaponRaycast : MonoBehaviour, IAmmoMagazine, IWeaponSwitchable
         if (debugLogs) Debug.Log($"[{name}] Перезарядка завершена. Патроны: {currentAmmo}/{magazineSize}");
     }
 
+    private float appliedRecoil;
+
     private void HandleRecoilRecovery()
     {
         currentRecoil = Mathf.Lerp(currentRecoil, targetRecoil, Time.deltaTime * recoilSnapSpeed);
@@ -691,7 +703,12 @@ public class WeaponRaycast : MonoBehaviour, IAmmoMagazine, IWeaponSwitchable
 
         if (playerCamera != null)
         {
-            playerCamera.transform.localRotation = Quaternion.Euler(-currentRecoil, 0f, 0f) * playerCamera.transform.localRotation;
+            // Применяем только РАЗНИЦУ между текущим и уже применённым в прошлый кадр
+            // значением отдачи — иначе поворот камеры накапливается лавинообразно
+            // и перестаёт соответствовать настроенному Recoil Amount.
+            float delta = currentRecoil - appliedRecoil;
+            playerCamera.transform.localRotation = Quaternion.Euler(-delta, 0f, 0f) * playerCamera.transform.localRotation;
+            appliedRecoil = currentRecoil;
         }
     }
 

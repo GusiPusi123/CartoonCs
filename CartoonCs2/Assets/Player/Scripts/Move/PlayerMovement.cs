@@ -320,6 +320,13 @@ public class PlayerMovement : MonoBehaviour {
     void Awake() {
         rb = GetComponent<Rigidbody>();
 
+        // КРИТИЧЕСКИ ВАЖНО для FPS-контроллера: движение считается в FixedUpdate
+        // (фиксированный шаг физики), а поворот камеры — в Update (каждый кадр рендера).
+        // Без интерполяции видимая позиция Rigidbody обновляется только на тиках физики,
+        // из-за чего при быстром движении оружие/камера визуально "дёргаются" и кажется,
+        // что дуло отстаёт от направления взгляда. Interpolate решает это.
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
+
         if (playerDash == null)
             playerDash = GetComponent<PlayerDash>();
     }
