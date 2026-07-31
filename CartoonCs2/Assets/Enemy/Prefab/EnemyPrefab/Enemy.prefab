@@ -5069,7 +5069,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 112
@@ -5091,12 +5091,12 @@ MonoBehaviour:
   chaseSpeed: 5
   detectionRadius: 100
   stoppingDistance: 1.5
-  attackRange: 1.5
-  attackDamage: 5
-  attackCooldown: 1
+  attackRange: 2
+  attackDamage: 10
+  attackCooldown: 1.5
   pathUpdateRate: 0.2
   navMeshSampleRadius: 5
-  loseTargetTime: 3
+  loseTargetTime: 0.01
   animator: {fileID: 0}
   deathEffect: {fileID: 8983516140579889374, guid: 6c5b8a6ff3e5d9c49bfce4914a55b245, type: 3}
   audioSource: {fileID: 0}

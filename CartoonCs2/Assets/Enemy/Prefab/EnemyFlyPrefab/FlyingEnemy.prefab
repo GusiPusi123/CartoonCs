@@ -450,7 +450,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   explosionEffect: {fileID: 7438787133187006634, guid: 822d5569d3a83354cbdc5b2d1feecf2f, type: 3}
-  audioSource: {fileID: 0}
+  audioSource: {fileID: 1729437383829089049, guid: 822d5569d3a83354cbdc5b2d1feecf2f, type: 3}
   explosionSound: {fileID: 0}
   hitSound: {fileID: 0}
   telegraphSound: {fileID: 0}

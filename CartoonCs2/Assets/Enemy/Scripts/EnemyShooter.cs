@@ -360,7 +360,7 @@ public class EnemyShooter : MonoBehaviour, IDamageable
         Collider col = GetComponent<Collider>();
         if (col != null) col.enabled = false;
 
-        Destroy(gameObject, 2f);
+        Destroy(gameObject);
     }
 
     private void OnDrawGizmosSelected()
