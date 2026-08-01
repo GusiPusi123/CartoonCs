@@ -539,18 +539,32 @@ public class WeaponRaycast : MonoBehaviour, IAmmoMagazine, IWeaponSwitchable
 
         targetRecoil += recoilAmount;
 
+        // Raycast здесь используется ТОЛЬКО чтобы заранее узнать, во что попадёт пуля
+        // (нужно для расчёта направления трассера). Сам урон применяется не здесь,
+        // а в момент, когда визуальная пуля (трассер) реально долетит до цели —
+        // см. HandleHit(), который теперь вызывается из SpawnTracer()/MoveTracer().
         if (Physics.Raycast(origin, direction, out RaycastHit hit, range, hitMask))
         {
-            HandleHit(hit);
-            SpawnTracer(hit.point);
+            if (bulletTracerPrefab != null)
+            {
+                // Есть трассер — урон отложится до момента его прилёта
+                SpawnTracer(hit.point, hit, true);
+            }
+            else
+            {
+                // Трассер не задан — вести себя как классический хитскан (урон мгновенно)
+                HandleHit(hit);
+            }
 
             if (debugLogs)
-                Debug.Log($"[{name}] Попал в: {hit.collider.name} на дистанции {hit.distance:F1}");
+                Debug.Log($"[{name}] Прицел на: {hit.collider.name}, дистанция {hit.distance:F1} (урон применится при долёте пули)");
         }
         else
         {
             Vector3 missPoint = origin + direction * range;
-            SpawnTracer(missPoint);
+
+            if (bulletTracerPrefab != null)
+                SpawnTracer(missPoint, default, false);
 
             if (debugLogs)
                 Debug.Log($"[{name}] Промах, выстрел ушёл в пустоту");
@@ -559,10 +573,16 @@ public class WeaponRaycast : MonoBehaviour, IAmmoMagazine, IWeaponSwitchable
 
     private void HandleHit(RaycastHit hit)
     {
+        // Цель могла быть уничтожена другим выстрелом (или иначе) за то время,
+        // пока эта пуля летела к точке попадания — hit.collider в таком случае
+        // ссылается на уже уничтоженный объект. Без этой проверки — NullReferenceException.
+        if (hit.collider == null) return;
+
         IDamageable damageable = hit.collider.GetComponent<IDamageable>();
         if (damageable != null)
         {
             damageable.TakeDamage(damage);
+            DamageNumberSpawner.Instance?.Spawn(hit.point, damage);
         }
 
         GameObject effectToSpawn = defaultImpactEffect;
@@ -584,7 +604,7 @@ public class WeaponRaycast : MonoBehaviour, IAmmoMagazine, IWeaponSwitchable
         }
     }
 
-    private void SpawnTracer(Vector3 targetPoint)
+    private void SpawnTracer(Vector3 targetPoint, RaycastHit hitInfo, bool hasHit)
     {
         if (bulletTracerPrefab == null || firePoint == null) return;
 
@@ -606,14 +626,18 @@ public class WeaponRaycast : MonoBehaviour, IAmmoMagazine, IWeaponSwitchable
                 line.SetPosition(1, targetPoint);
             }
             Destroy(tracer, 0.05f);
+
+            // Мгновенный трассер долетает "сразу" в тот же кадр — применяем урон без задержки
+            if (hasHit)
+                HandleHit(hitInfo);
         }
         else
         {
-            StartCoroutine(MoveTracer(tracer, targetPoint));
+            StartCoroutine(MoveTracer(tracer, targetPoint, hitInfo, hasHit));
         }
     }
 
-    private System.Collections.IEnumerator MoveTracer(GameObject tracer, Vector3 targetPoint)
+    private System.Collections.IEnumerator MoveTracer(GameObject tracer, Vector3 targetPoint, RaycastHit hitInfo, bool hasHit)
     {
         float distance = Vector3.Distance(tracer.transform.position, targetPoint);
         float duration = distance / tracerSpeed;
@@ -628,6 +652,10 @@ public class WeaponRaycast : MonoBehaviour, IAmmoMagazine, IWeaponSwitchable
             tracer.transform.position = Vector3.Lerp(startPos, targetPoint, elapsed / duration);
             yield return null;
         }
+
+        // Пуля физически долетела до цели — только теперь применяем урон и эффект попадания
+        if (hasHit)
+            HandleHit(hitInfo);
 
         if (tracer != null)
             Destroy(tracer);

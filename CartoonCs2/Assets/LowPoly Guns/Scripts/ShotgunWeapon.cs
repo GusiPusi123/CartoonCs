@@ -180,6 +180,7 @@ public class ShotgunWeapon : MonoBehaviour, IAmmoMagazine, IWeaponSwitchable
         if (damageable != null)
         {
             damageable.TakeDamage(finalDamage);
+            DamageNumberSpawner.Instance?.Spawn(hit.point, finalDamage);
         }
 
         GameObject effectToSpawn = defaultImpactEffect;

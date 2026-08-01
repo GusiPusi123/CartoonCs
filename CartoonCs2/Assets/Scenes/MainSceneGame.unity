@@ -4636,6 +4636,7 @@ Transform:
   - {fileID: 1204394806}
   - {fileID: 1846897665}
   - {fileID: 206871373}
+  - {fileID: 1319724134}
   - {fileID: 1822460281}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -39369,6 +39370,52 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!1 &1319724133
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1319724134}
+  - component: {fileID: 1319724135}
+  m_Layer: 0
+  m_Name: DamageNumberSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1319724134
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1319724133}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.32999802}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 208334044}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1319724135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1319724133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1eac4ffe7f7aa94886475c14c9c8116, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageNumberPrefab: {fileID: 1150584519782596994, guid: 71ea113738119d346aefd16b318f92c1, type: 3}
+  spawnHeightOffset: 0.15
 --- !u!43 &1332314869
 Mesh:
   m_ObjectHideFlags: 0
@@ -53053,6 +53100,9 @@ MonoBehaviour:
   - prefab: {fileID: 6361586034478340212, guid: 3e5d57c9144b53847ac7d317ccbd7e3c, type: 3}
     weight: 1
     minWave: 0
+  - prefab: {fileID: 1384250264007172847, guid: 69a8fade6a7d314479da9c0c189ffddc, type: 3}
+    weight: 1
+    minWave: 0
   spawnPoints:
   - {fileID: 1983323617}
   - {fileID: 1222352287}
@@ -53067,7 +53117,7 @@ MonoBehaviour:
   - {fileID: 340181356}
   randomizeSpawnPoint: 0
   baseEnemyCount: 5
-  enemyCountMultiplier: 1.5
+  enemyCountMultiplier: 1.25
   maxWaves: 0
   delayBeforeFirstWave: 3
   delayBetweenWaves: 5
@@ -65304,7 +65354,7 @@ PrefabInstance:
       objectReference: {fileID: 1458530735}
     - target: {fileID: 5488216362518601240, guid: ce2e21754406bb8468648bebdaa22ea1, type: 3}
       propertyPath: tracerSpeed
-      value: 200
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 5488216362518601240, guid: ce2e21754406bb8468648bebdaa22ea1, type: 3}
       propertyPath: playerCamera
@@ -65323,9 +65373,17 @@ PrefabInstance:
       value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 5488216362518601240, guid: ce2e21754406bb8468648bebdaa22ea1, type: 3}
+      propertyPath: enemyImpactEffect
+      value: 
+      objectReference: {fileID: 4473110526175719142, guid: 50d4099292044424a917dd357f238251, type: 3}
+    - target: {fileID: 5488216362518601240, guid: ce2e21754406bb8468648bebdaa22ea1, type: 3}
       propertyPath: muzzleFlashEffect
       value: 
       objectReference: {fileID: 8046648408647320551, guid: ea3a1b4aa9e184048a0fc80d176d18ad, type: 3}
+    - target: {fileID: 5488216362518601240, guid: ce2e21754406bb8468648bebdaa22ea1, type: 3}
+      propertyPath: defaultImpactEffect
+      value: 
+      objectReference: {fileID: 4473110526175719142, guid: 9a62fa07061ed544bba72e4a0bd92363, type: 3}
     - target: {fileID: 5488216362518601240, guid: ce2e21754406bb8468648bebdaa22ea1, type: 3}
       propertyPath: fireSounds.Array.size
       value: 2
@@ -65438,9 +65496,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 247471530}
     - target: {fileID: 2302473512540922558, guid: f1618387a5eb8014993e72b67a456787, type: 3}
+      propertyPath: enemyImpactEffect
+      value: 
+      objectReference: {fileID: 4473110526175719142, guid: 50d4099292044424a917dd357f238251, type: 3}
+    - target: {fileID: 2302473512540922558, guid: f1618387a5eb8014993e72b67a456787, type: 3}
       propertyPath: muzzleFlashEffect
       value: 
       objectReference: {fileID: 8046648408647320551, guid: ea3a1b4aa9e184048a0fc80d176d18ad, type: 3}
+    - target: {fileID: 2302473512540922558, guid: f1618387a5eb8014993e72b67a456787, type: 3}
+      propertyPath: defaultImpactEffect
+      value: 
+      objectReference: {fileID: 4473110526175719142, guid: 9a62fa07061ed544bba72e4a0bd92363, type: 3}
     - target: {fileID: 2302473512540922558, guid: f1618387a5eb8014993e72b67a456787, type: 3}
       propertyPath: fireSounds.Array.size
       value: 2
@@ -65568,7 +65634,7 @@ PrefabInstance:
       objectReference: {fileID: 1458530735}
     - target: {fileID: 1732853458998486729, guid: 3c095d47ed1ecf24496bbeb5be0ff716, type: 3}
       propertyPath: tracerSpeed
-      value: 200
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 1732853458998486729, guid: 3c095d47ed1ecf24496bbeb5be0ff716, type: 3}
       propertyPath: playerCamera
@@ -65583,9 +65649,17 @@ PrefabInstance:
       value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 1732853458998486729, guid: 3c095d47ed1ecf24496bbeb5be0ff716, type: 3}
+      propertyPath: enemyImpactEffect
+      value: 
+      objectReference: {fileID: 4473110526175719142, guid: 50d4099292044424a917dd357f238251, type: 3}
+    - target: {fileID: 1732853458998486729, guid: 3c095d47ed1ecf24496bbeb5be0ff716, type: 3}
       propertyPath: muzzleFlashEffect
       value: 
       objectReference: {fileID: 8046648408647320551, guid: ea3a1b4aa9e184048a0fc80d176d18ad, type: 3}
+    - target: {fileID: 1732853458998486729, guid: 3c095d47ed1ecf24496bbeb5be0ff716, type: 3}
+      propertyPath: defaultImpactEffect
+      value: 
+      objectReference: {fileID: 4473110526175719142, guid: 9a62fa07061ed544bba72e4a0bd92363, type: 3}
     - target: {fileID: 1732853458998486729, guid: 3c095d47ed1ecf24496bbeb5be0ff716, type: 3}
       propertyPath: fireSounds.Array.size
       value: 2
@@ -65931,7 +66005,7 @@ PrefabInstance:
       objectReference: {fileID: 1458530735}
     - target: {fileID: 6616600501065054360, guid: 709551a10827c0f46a9f4be9f09634f4, type: 3}
       propertyPath: tracerSpeed
-      value: 200
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 6616600501065054360, guid: 709551a10827c0f46a9f4be9f09634f4, type: 3}
       propertyPath: playerCamera
@@ -65946,9 +66020,17 @@ PrefabInstance:
       value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 6616600501065054360, guid: 709551a10827c0f46a9f4be9f09634f4, type: 3}
+      propertyPath: enemyImpactEffect
+      value: 
+      objectReference: {fileID: 4473110526175719142, guid: 50d4099292044424a917dd357f238251, type: 3}
+    - target: {fileID: 6616600501065054360, guid: 709551a10827c0f46a9f4be9f09634f4, type: 3}
       propertyPath: muzzleFlashEffect
       value: 
       objectReference: {fileID: 8046648408647320551, guid: ea3a1b4aa9e184048a0fc80d176d18ad, type: 3}
+    - target: {fileID: 6616600501065054360, guid: 709551a10827c0f46a9f4be9f09634f4, type: 3}
+      propertyPath: defaultImpactEffect
+      value: 
+      objectReference: {fileID: 4473110526175719142, guid: 9a62fa07061ed544bba72e4a0bd92363, type: 3}
     - target: {fileID: 6616600501065054360, guid: 709551a10827c0f46a9f4be9f09634f4, type: 3}
       propertyPath: fireSounds.Array.size
       value: 2
@@ -66276,7 +66358,7 @@ PrefabInstance:
       objectReference: {fileID: 1458530735}
     - target: {fileID: 5608452359268647609, guid: 29f40c18f139c2a4e92d4769b79930c8, type: 3}
       propertyPath: tracerSpeed
-      value: 200
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 5608452359268647609, guid: 29f40c18f139c2a4e92d4769b79930c8, type: 3}
       propertyPath: magazineSize
@@ -66287,9 +66369,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 247471530}
     - target: {fileID: 5608452359268647609, guid: 29f40c18f139c2a4e92d4769b79930c8, type: 3}
+      propertyPath: enemyImpactEffect
+      value: 
+      objectReference: {fileID: 4473110526175719142, guid: 50d4099292044424a917dd357f238251, type: 3}
+    - target: {fileID: 5608452359268647609, guid: 29f40c18f139c2a4e92d4769b79930c8, type: 3}
       propertyPath: muzzleFlashEffect
       value: 
       objectReference: {fileID: 8046648408647320551, guid: ea3a1b4aa9e184048a0fc80d176d18ad, type: 3}
+    - target: {fileID: 5608452359268647609, guid: 29f40c18f139c2a4e92d4769b79930c8, type: 3}
+      propertyPath: defaultImpactEffect
+      value: 
+      objectReference: {fileID: 4473110526175719142, guid: 9a62fa07061ed544bba72e4a0bd92363, type: 3}
     - target: {fileID: 5608452359268647609, guid: 29f40c18f139c2a4e92d4769b79930c8, type: 3}
       propertyPath: fireSounds.Array.size
       value: 2
@@ -66502,7 +66592,7 @@ PrefabInstance:
       objectReference: {fileID: 1458530735}
     - target: {fileID: 1872829734411093882, guid: 3ea6be4a16c346f4e8c91d95f84ba3e9, type: 3}
       propertyPath: tracerSpeed
-      value: 200
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 1872829734411093882, guid: 3ea6be4a16c346f4e8c91d95f84ba3e9, type: 3}
       propertyPath: playerCamera
@@ -66517,9 +66607,17 @@ PrefabInstance:
       value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 1872829734411093882, guid: 3ea6be4a16c346f4e8c91d95f84ba3e9, type: 3}
+      propertyPath: enemyImpactEffect
+      value: 
+      objectReference: {fileID: 4473110526175719142, guid: 50d4099292044424a917dd357f238251, type: 3}
+    - target: {fileID: 1872829734411093882, guid: 3ea6be4a16c346f4e8c91d95f84ba3e9, type: 3}
       propertyPath: muzzleFlashEffect
       value: 
       objectReference: {fileID: 8046648408647320551, guid: ea3a1b4aa9e184048a0fc80d176d18ad, type: 3}
+    - target: {fileID: 1872829734411093882, guid: 3ea6be4a16c346f4e8c91d95f84ba3e9, type: 3}
+      propertyPath: defaultImpactEffect
+      value: 
+      objectReference: {fileID: 4473110526175719142, guid: 9a62fa07061ed544bba72e4a0bd92363, type: 3}
     - target: {fileID: 1872829734411093882, guid: 3ea6be4a16c346f4e8c91d95f84ba3e9, type: 3}
       propertyPath: fireSounds.Array.size
       value: 1
@@ -66637,7 +66735,7 @@ PrefabInstance:
       objectReference: {fileID: 1458530735}
     - target: {fileID: 3735571809409264074, guid: a698b258a65979f49a34a644dc2d8251, type: 3}
       propertyPath: tracerSpeed
-      value: 200
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 3735571809409264074, guid: a698b258a65979f49a34a644dc2d8251, type: 3}
       propertyPath: magazineSize
@@ -66656,9 +66754,17 @@ PrefabInstance:
       value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 3735571809409264074, guid: a698b258a65979f49a34a644dc2d8251, type: 3}
+      propertyPath: enemyImpactEffect
+      value: 
+      objectReference: {fileID: 4473110526175719142, guid: 50d4099292044424a917dd357f238251, type: 3}
+    - target: {fileID: 3735571809409264074, guid: a698b258a65979f49a34a644dc2d8251, type: 3}
       propertyPath: muzzleFlashEffect
       value: 
       objectReference: {fileID: 8046648408647320551, guid: ea3a1b4aa9e184048a0fc80d176d18ad, type: 3}
+    - target: {fileID: 3735571809409264074, guid: a698b258a65979f49a34a644dc2d8251, type: 3}
+      propertyPath: defaultImpactEffect
+      value: 
+      objectReference: {fileID: 4473110526175719142, guid: 9a62fa07061ed544bba72e4a0bd92363, type: 3}
     - target: {fileID: 3735571809409264074, guid: a698b258a65979f49a34a644dc2d8251, type: 3}
       propertyPath: fireSounds.Array.size
       value: 2
@@ -66909,7 +67015,7 @@ PrefabInstance:
       objectReference: {fileID: 1458530735}
     - target: {fileID: 2053616761301569210, guid: 5c920052dae1b8a4e940e75bcd40ab7e, type: 3}
       propertyPath: tracerSpeed
-      value: 200
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 2053616761301569210, guid: 5c920052dae1b8a4e940e75bcd40ab7e, type: 3}
       propertyPath: magazineSize
@@ -66928,9 +67034,17 @@ PrefabInstance:
       value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 2053616761301569210, guid: 5c920052dae1b8a4e940e75bcd40ab7e, type: 3}
+      propertyPath: enemyImpactEffect
+      value: 
+      objectReference: {fileID: 4473110526175719142, guid: 50d4099292044424a917dd357f238251, type: 3}
+    - target: {fileID: 2053616761301569210, guid: 5c920052dae1b8a4e940e75bcd40ab7e, type: 3}
       propertyPath: muzzleFlashEffect
       value: 
       objectReference: {fileID: 8046648408647320551, guid: ea3a1b4aa9e184048a0fc80d176d18ad, type: 3}
+    - target: {fileID: 2053616761301569210, guid: 5c920052dae1b8a4e940e75bcd40ab7e, type: 3}
+      propertyPath: defaultImpactEffect
+      value: 
+      objectReference: {fileID: 4473110526175719142, guid: 9a62fa07061ed544bba72e4a0bd92363, type: 3}
     - target: {fileID: 2053616761301569210, guid: 5c920052dae1b8a4e940e75bcd40ab7e, type: 3}
       propertyPath: fireSounds.Array.size
       value: 1
@@ -67027,9 +67141,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 701528684220673715, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      propertyPath: m_Radius
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 701528684220673715, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 13400000, guid: c78606fb3e71b4f46a6e1b8bd8b824af, type: 2}
+    - target: {fileID: 2531626560926840888, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2718082532281174677, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
       propertyPath: m_Name
       value: PlayerContainer
@@ -67101,6 +67223,10 @@ PrefabInstance:
     - target: {fileID: 9056068187554285235, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
       propertyPath: field of view
       value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 9056068187554285235, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      propertyPath: near clip plane
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

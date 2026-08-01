@@ -43,6 +43,12 @@ public class FlyingKamikaze : MonoBehaviour, IDamageable
     [SerializeField] private AudioClip hitSound;
     [SerializeField] private AudioClip telegraphSound; // звук прицеливания/предупреждения
 
+    [Header("Взрыв — отдача")]
+    [Tooltip("Сила, с которой взрыв отталкивает игрока (нужен Rigidbody на игроке)")]
+    [SerializeField] private float explosionPushForce = 10f;
+    [Tooltip("Добавляет вертикальную составляющую отбросу, чтобы игрока чуть подкидывало, а не только толкало горизонтально")]
+    [SerializeField] private float explosionUpwardModifier = 0.3f;
+
     [Header("Мигание при уроне")]
     [SerializeField] private Color flashColor = Color.white;
     [SerializeField] private float flashDuration = 0.3f;
@@ -242,6 +248,18 @@ public class FlyingKamikaze : MonoBehaviour, IDamageable
                 if (playerHealth != null)
                 {
                     playerHealth.TakeDamage(explosionDamage);
+                }
+
+                // Отдача от взрыва — толкаем игрока (нужен Rigidbody, он есть в PlayerMovement)
+                Rigidbody playerRb = hit.GetComponent<Rigidbody>();
+                if (playerRb != null)
+                {
+                    Vector3 pushDirection = (hit.transform.position - transform.position);
+                    pushDirection.y = 0f; // вертикаль добавим отдельно через upwardModifier, чтобы отброс не зависел от того, выше или ниже игрок относительно взрыва
+                    pushDirection.Normalize();
+                    pushDirection += Vector3.up * explosionUpwardModifier;
+
+                    playerRb.AddForce(pushDirection * explosionPushForce, ForceMode.Impulse);
                 }
             }
         }
