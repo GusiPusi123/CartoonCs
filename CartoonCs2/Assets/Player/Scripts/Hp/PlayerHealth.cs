@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : MonoBehaviour, IDamageable
 {
     [SerializeField] private int maxHealth = 100;
     private int currentHealth;
@@ -13,6 +13,10 @@ public class PlayerHealth : MonoBehaviour
     [Header("Эффекты")]
     [Tooltip("Система частиц, которая проигрывается при получении урона (например, прикреплённая к полоске здоровья)")]
     [SerializeField] private ParticleSystem damageParticles;
+
+    [Header("Экранная виньетка")]
+    [Tooltip("Ниже этого значения HP виньетка начинает постоянно пульсировать")]
+    [SerializeField] private int lowHealthThreshold = 30;
 
     private void Awake()
     {
@@ -27,6 +31,9 @@ public class PlayerHealth : MonoBehaviour
         UpdateSlider();
         PlayDamageParticles();
 
+        ScreenVignetteEffect.Instance?.FlashDamage();
+        UpdateLowHealthState();
+
         if (currentHealth <= 0)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -40,6 +47,7 @@ public class PlayerHealth : MonoBehaviour
 
         currentHealth = Mathf.Min(currentHealth + healAmount, maxHealth);
         UpdateSlider();
+        UpdateLowHealthState();
     }
 
     /// <summary>Полностью восстанавливает здоровье до максимума.</summary>
@@ -47,10 +55,16 @@ public class PlayerHealth : MonoBehaviour
     {
         currentHealth = maxHealth;
         UpdateSlider();
+        UpdateLowHealthState();
     }
 
     public int CurrentHealth => currentHealth;
     public int MaxHealth => maxHealth;
+
+    private void UpdateLowHealthState()
+    {
+        ScreenVignetteEffect.Instance?.SetLowHealth(currentHealth <= lowHealthThreshold);
+    }
 
     private void PlayDamageParticles()
     {

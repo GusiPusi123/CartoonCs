@@ -212,26 +212,8 @@ public class ShotgunWeapon : MonoBehaviour, IAmmoMagazine, IWeaponSwitchable
         if (trail != null)
             trail.Clear();
 
-        StartCoroutine(MoveTracer(tracer, targetPoint));
-    }
-
-    private IEnumerator MoveTracer(GameObject tracer, Vector3 targetPoint)
-    {
-        float distance = Vector3.Distance(tracer.transform.position, targetPoint);
-        float duration = distance / tracerSpeed;
-        float elapsed = 0f;
-        Vector3 startPos = tracer.transform.position;
-
-        while (elapsed < duration)
-        {
-            if (tracer == null) yield break;
-            elapsed += Time.deltaTime;
-            tracer.transform.position = Vector3.Lerp(startPos, targetPoint, elapsed / duration);
-            yield return null;
-        }
-
-        if (tracer != null)
-            Destroy(tracer);
+        TracerProjectile projectile = tracer.AddComponent<TracerProjectile>();
+        projectile.Launch(targetPoint, tracerSpeed, null);
     }
 
     private void SpawnMuzzleFlash()

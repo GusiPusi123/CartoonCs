@@ -633,32 +633,17 @@ public class WeaponRaycast : MonoBehaviour, IAmmoMagazine, IWeaponSwitchable
         }
         else
         {
-            StartCoroutine(MoveTracer(tracer, targetPoint, hitInfo, hasHit));
+            TracerProjectile projectile = tracer.AddComponent<TracerProjectile>();
+            projectile.Launch(targetPoint, tracerSpeed, () =>
+            {
+                // Пуля физически долетела до цели — только теперь применяем урон и эффект попадания.
+                // Этот колбэк вызовется, даже если само оружие к этому моменту уже
+                // деактивировано (переключили на другое оружие) — TracerProjectile
+                // работает независимо, на объекте самой пули.
+                if (hasHit)
+                    HandleHit(hitInfo);
+            });
         }
-    }
-
-    private System.Collections.IEnumerator MoveTracer(GameObject tracer, Vector3 targetPoint, RaycastHit hitInfo, bool hasHit)
-    {
-        float distance = Vector3.Distance(tracer.transform.position, targetPoint);
-        float duration = distance / tracerSpeed;
-        float elapsed = 0f;
-        Vector3 startPos = tracer.transform.position;
-
-        while (elapsed < duration)
-        {
-            if (tracer == null) yield break;
-
-            elapsed += Time.deltaTime;
-            tracer.transform.position = Vector3.Lerp(startPos, targetPoint, elapsed / duration);
-            yield return null;
-        }
-
-        // Пуля физически долетела до цели — только теперь применяем урон и эффект попадания
-        if (hasHit)
-            HandleHit(hitInfo);
-
-        if (tracer != null)
-            Destroy(tracer);
     }
 
     private void SpawnMuzzleFlash()
