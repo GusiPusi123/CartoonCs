@@ -134,6 +134,7 @@ public class LavaHazard : MonoBehaviour
             );
 
             GameObject bubble = Instantiate(bubbleParticlesPrefab, randomPoint, Quaternion.identity);
+            bubble.transform.rotation = Quaternion.LookRotation(Vector3.up);
             DestroyAfterLifetime(bubble, bubbleParticlesLifetime);
         }
     }
