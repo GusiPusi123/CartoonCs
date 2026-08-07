@@ -58,7 +58,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 768
   magazineSize: 12
-  reserveAmmo: 100000
   reloadTime: 1.1
   bulletTracerPrefab: {fileID: 1642549959154380408, guid: c35f573c7552c754695ccf1246b2934c, type: 3}
   tracerSpeed: 60
@@ -76,7 +75,10 @@ MonoBehaviour:
   recoilAmount: 1.5
   recoilRecoverySpeed: 8
   recoilSnapSpeed: 20
+  moveOffsetAmount: 0.2
+  moveSmoothTime: 0.1
   animator: {fileID: 2097336151473428151}
+  idleStateName: Idle
 --- !u!95 &2097336151473428151
 Animator:
   serializedVersion: 5
@@ -159,7 +161,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 23ced55e267d41d4d917eb168e759b96, type: 2}
+  - {fileID: 2100000, guid: 82f4e6f668513a349b0a36dc11e57e5a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -275,7 +277,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 23ced55e267d41d4d917eb168e759b96, type: 2}
+  - {fileID: 2100000, guid: 82f4e6f668513a349b0a36dc11e57e5a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

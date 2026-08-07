@@ -31,9 +31,6 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         UpdateSlider();
         PlayDamageParticles();
 
-        ScreenVignetteEffect.Instance?.FlashDamage();
-        UpdateLowHealthState();
-
         if (currentHealth <= 0)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -47,7 +44,6 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
         currentHealth = Mathf.Min(currentHealth + healAmount, maxHealth);
         UpdateSlider();
-        UpdateLowHealthState();
     }
 
     /// <summary>Полностью восстанавливает здоровье до максимума.</summary>
@@ -55,16 +51,10 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     {
         currentHealth = maxHealth;
         UpdateSlider();
-        UpdateLowHealthState();
     }
 
     public int CurrentHealth => currentHealth;
     public int MaxHealth => maxHealth;
-
-    private void UpdateLowHealthState()
-    {
-        ScreenVignetteEffect.Instance?.SetLowHealth(currentHealth <= lowHealthThreshold);
-    }
 
     private void PlayDamageParticles()
     {
