@@ -58,7 +58,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 768
   magazineSize: 30
-  reserveAmmo: 100000
   reloadTime: 1.35
   bulletTracerPrefab: {fileID: 1642549959154380408, guid: c35f573c7552c754695ccf1246b2934c, type: 3}
   tracerSpeed: 60
@@ -73,10 +72,13 @@ MonoBehaviour:
   defaultImpactEffect: {fileID: 523013284033048581, guid: 1d794277dd15ebb46a277e269167cc57, type: 3}
   enemyImpactEffect: {fileID: 523013284033048581, guid: e60002511c84d3841932834f403d9846, type: 3}
   impactEffectLifetime: 1
-  recoilAmount: 2
+  recoilAmount: 25
   recoilRecoverySpeed: 8
-  recoilSnapSpeed: 20
+  recoilSnapSpeed: 4
+  moveOffsetAmount: 0.2
+  moveSmoothTime: 0.1
   animator: {fileID: 402909247037157280}
+  idleStateName: Idle
 --- !u!95 &402909247037157280
 Animator:
   serializedVersion: 5

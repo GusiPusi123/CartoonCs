@@ -72,12 +72,13 @@ MonoBehaviour:
   defaultImpactEffect: {fileID: 523013284033048581, guid: 1d794277dd15ebb46a277e269167cc57, type: 3}
   enemyImpactEffect: {fileID: 523013284033048581, guid: e60002511c84d3841932834f403d9846, type: 3}
   impactEffectLifetime: 1
-  recoilAmount: 4
-  recoilRecoverySpeed: 10
-  recoilSnapSpeed: 40
+  recoilAmount: 25
+  recoilRecoverySpeed: 8
+  recoilSnapSpeed: 4
   moveOffsetAmount: 0.05
   moveSmoothTime: 0.5
   animator: {fileID: 7667555992704863147}
+  idleStateName: Idle
 --- !u!95 &7667555992704863147
 Animator:
   serializedVersion: 5

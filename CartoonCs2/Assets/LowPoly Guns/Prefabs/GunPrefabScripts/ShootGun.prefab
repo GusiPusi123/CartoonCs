@@ -116,17 +116,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   magazineSize: 8
-  singleShellReloadTime: 0.55
-  singleShellAnimTrigger: ReloadShell
-  singleShellSound: {fileID: 0}
-  useFullReloadWhenEmpty: 1
-  fullMagazineReloadTime: 2.2
-  fullMagazineAnimTrigger: ReloadFull
-  fullMagazineSound: {fileID: 0}
-  pumpAnimTrigger: Pump
-  pumpDuration: 0.35
-  pumpSound: {fileID: 0}
-  allowFireToInterruptReload: 1
+  reloadTime: 1.6
+  reloadAnimTrigger: Reload
+  reloadSound: {fileID: 0}
   bulletTracerPrefab: {fileID: 1642549959154380408, guid: c35f573c7552c754695ccf1246b2934c, type: 3}
   tracerSpeed: 60
   muzzleFlashEffect: {fileID: 0}
@@ -138,9 +130,9 @@ MonoBehaviour:
   defaultImpactEffect: {fileID: 523013284033048581, guid: 1d794277dd15ebb46a277e269167cc57, type: 3}
   enemyImpactEffect: {fileID: 523013284033048581, guid: e60002511c84d3841932834f403d9846, type: 3}
   impactEffectLifetime: 2
-  recoilAmount: 4
-  recoilRecoverySpeed: 6
-  recoilSnapSpeed: 18
+  recoilAmount: 150
+  recoilRecoverySpeed: 4
+  recoilSnapSpeed: 2
   animator: {fileID: 0}
   idleStateName: Idle
   fireAnimTrigger: Fire

@@ -46,6 +46,16 @@ public class ExplosiveBarrel : MonoBehaviour, IDamageable
     [Tooltip("Минимальная скорость удара, при которой бочка взрывается")]
     [SerializeField] private float impactVelocityThreshold = 8f;
 
+    [Header("Тряска камеры")]
+    [Tooltip("Максимальная сила тряски (при взрыве прямо у камеры)")]
+    [SerializeField] private float shakeMaxIntensity = 0.4f;
+    [Tooltip("Длительность тряски в секундах")]
+    [SerializeField] private float shakeDuration = 0.35f;
+    [Tooltip("Радиус, в котором камера вообще трясётся (обычно чуть больше explosionRadius)")]
+    [SerializeField] private float shakeRadius = 12f;
+    [Tooltip("Если не задано — попробует найти Camera.main")]
+    [SerializeField] private Camera targetCamera;
+
     private bool hasExploded = false;
 
     private void Awake()
@@ -162,6 +172,27 @@ public class ExplosiveBarrel : MonoBehaviour, IDamageable
         {
             AudioSource.PlayClipAtPoint(explosionSound, transform.position, explosionVolume);
         }
+
+        TriggerCameraShake();
+    }
+
+    private void TriggerCameraShake()
+    {
+        Camera cam = targetCamera != null ? targetCamera : Camera.main;
+        if (cam == null) return;
+
+        float distance = Vector3.Distance(transform.position, cam.transform.position);
+        if (distance > shakeRadius) return; // слишком далеко — камеру не трясём вообще
+
+        // Затухание силы тряски с расстоянием (1 у эпицентра, 0 на границе shakeRadius)
+        float falloff = 1f - Mathf.Clamp01(distance / shakeRadius);
+        float intensity = shakeMaxIntensity * falloff;
+
+        CameraShake shake = cam.GetComponent<CameraShake>();
+        if (shake == null)
+            shake = cam.gameObject.AddComponent<CameraShake>();
+
+        shake.Shake(intensity, shakeDuration);
     }
 
     // Наглядно показывает радиус взрыва в редакторе, не влияет на игру

@@ -29516,7 +29516,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6485311331432890065, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
   m_PrefabInstance: {fileID: 1607997704}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1607997705}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3f6a9fcbb3def594b99b50a8b0afe006, type: 3}
@@ -42220,6 +42220,46 @@ PrefabInstance:
       propertyPath: ammoText
       value: 
       objectReference: {fileID: 423659575}
+    - target: {fileID: 1732853458998486729, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      propertyPath: recoilAmount
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1732853458998486729, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      propertyPath: recoilSnapSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1732853458998486729, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      propertyPath: recoilRecoverySpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1872829734411093882, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      propertyPath: recoilAmount
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1872829734411093882, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      propertyPath: recoilSnapSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2053616761301569210, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      propertyPath: recoilAmount
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2053616761301569210, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      propertyPath: recoilSnapSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2302473512540922558, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      propertyPath: recoilAmount
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 2302473512540922558, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      propertyPath: recoilSnapSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2302473512540922558, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      propertyPath: recoilRecoverySpeed
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2718082532281174677, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
       propertyPath: m_Name
       value: PlayerContainer
@@ -42232,6 +42272,18 @@ PrefabInstance:
       propertyPath: ammoText
       value: 
       objectReference: {fileID: 423659575}
+    - target: {fileID: 3735571809409264074, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      propertyPath: recoilAmount
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3735571809409264074, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      propertyPath: recoilSnapSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3735571809409264074, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      propertyPath: recoilRecoverySpeed
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3753356294613263472, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
       propertyPath: ammoText
       value: 
@@ -42244,10 +42296,46 @@ PrefabInstance:
       propertyPath: ammoText
       value: 
       objectReference: {fileID: 423659575}
+    - target: {fileID: 5488216362518601240, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      propertyPath: recoilAmount
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 5488216362518601240, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      propertyPath: recoilSnapSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5488216362518601240, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      propertyPath: recoilRecoverySpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5608452359268647609, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      propertyPath: recoilAmount
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5608452359268647609, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      propertyPath: recoilSnapSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5608452359268647609, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      propertyPath: recoilRecoverySpeed
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6447370217069513581, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
       propertyPath: healthSlider
       value: 
       objectReference: {fileID: 710975947}
+    - target: {fileID: 6616600501065054360, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      propertyPath: recoilAmount
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 6616600501065054360, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      propertyPath: recoilSnapSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6616600501065054360, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      propertyPath: recoilRecoverySpeed
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7269954540505507668, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
       propertyPath: ammoText
       value: 
@@ -42299,8 +42387,28 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3886726587170871471, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      insertIndex: 4
+      addedObject: {fileID: 1607997706}
   m_SourcePrefab: {fileID: 100100000, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+--- !u!1 &1607997705 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3886726587170871471, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+  m_PrefabInstance: {fileID: 1607997704}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1607997706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1607997705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b93522a62cac98548838163dec151122, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &1617193843
 Mesh:
   m_ObjectHideFlags: 0
