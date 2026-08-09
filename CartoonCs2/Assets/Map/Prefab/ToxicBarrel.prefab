@@ -18,7 +18,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 18
   m_IsActive: 1
 --- !u!4 &4267123712475338725
 Transform:
@@ -1170,7 +1170,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 18
   m_IsActive: 1
 --- !u!4 &6628256274933723787
 Transform:
@@ -1820,7 +1820,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 18
   m_IsActive: 1
 --- !u!4 &6150471977488403273
 Transform:
@@ -1905,7 +1905,7 @@ MonoBehaviour:
   damageMask:
     serializedVersion: 2
     m_Bits: 896
-  explosionForce: 300
+  explosionForce: 175
   upwardsModifier: 0.5
   chainReaction: 1
   chainReactionDelay: 0.15
@@ -1914,6 +1914,10 @@ MonoBehaviour:
   explosionVolume: 1
   explodeOnHardImpact: 0
   impactVelocityThreshold: 8
+  shakeMaxIntensity: 0.4
+  shakeDuration: 0.35
+  shakeRadius: 12
+  targetCamera: {fileID: 0}
 --- !u!1 &2886430131163716582
 GameObject:
   m_ObjectHideFlags: 0
@@ -1932,7 +1936,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 18
   m_IsActive: 1
 --- !u!4 &6870928028616311351
 Transform:
@@ -3524,7 +3528,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 18
   m_IsActive: 1
 --- !u!4 &43239353224731520
 Transform:
