@@ -168,3 +168,4 @@ public class BreakableGlass : MonoBehaviour, IDamageable, IShatterable
         Shatter(other.ClosestPoint(transform.position), Vector3.up);
     }
 }
+

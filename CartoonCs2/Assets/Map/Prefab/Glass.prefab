@@ -122,7 +122,7 @@ MonoBehaviour:
   particlesLifetime: 3
   baseParticleCount: 40
   maxParticleCount: 300
-  shatterSound: {fileID: 0}
+  shatterSound: {fileID: 8300000, guid: e3e8498399fea514c8be62eb51488ec0, type: 3}
   shatterSoundVolume: 1
   breakOnPlayerTouch: 1
   playerTag: Player

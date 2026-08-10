@@ -48336,9 +48336,6 @@ MonoBehaviour:
   - prefab: {fileID: 6361586034478340212, guid: 3e5d57c9144b53847ac7d317ccbd7e3c, type: 3}
     weight: 1
     minWave: 0
-  - prefab: {fileID: 1384250264007172847, guid: 69a8fade6a7d314479da9c0c189ffddc, type: 3}
-    weight: 1
-    minWave: 0
   spawnPoints:
   - {fileID: 1983323617}
   - {fileID: 1222352287}
