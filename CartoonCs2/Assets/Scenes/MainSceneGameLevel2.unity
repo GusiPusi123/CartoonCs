@@ -17196,6 +17196,10 @@ PrefabInstance:
       propertyPath: ammoText
       value: 
       objectReference: {fileID: 1322764997}
+    - target: {fileID: 7334640357855396718, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      propertyPath: whatIsGrappleable.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
     - target: {fileID: 8126693539820046475, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
       propertyPath: ammoText
       value: 

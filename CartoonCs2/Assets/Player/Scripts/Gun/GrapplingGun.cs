@@ -9,6 +9,10 @@ public class GrapplingGun : MonoBehaviour
     private float maxDistance = 15f;
     private SpringJoint joint;
 
+    [Header("Aim assist")]
+    public bool useAimAssist = true;
+    public float sphereCastRadius = 3f; // прощает промах прицела на этот радиус
+
     void Awake() {
         lr = GetComponent<LineRenderer>();
     }
@@ -31,27 +35,50 @@ public class GrapplingGun : MonoBehaviour
     /// Call whenever we want to start a grapple
     /// </summary>
     void StartGrapple() {
+        if (!TryFindGrapplePoint(out grapplePoint)) return;
+
+        joint = player.gameObject.AddComponent<SpringJoint>();
+        joint.autoConfigureConnectedAnchor = false;
+        joint.connectedAnchor = grapplePoint;
+
+        float distanceFromPoint = Vector3.Distance(player.position, grapplePoint);
+
+        //The distance grapple will try to keep from grapple point. 
+        joint.maxDistance = distanceFromPoint * 0.8f;
+        joint.minDistance = distanceFromPoint * 0.25f;
+
+        //Adjust these values to fit your game.
+        joint.spring = 4.5f;
+        joint.damper = 7f;
+        joint.massScale = 4.5f;
+
+        lr.positionCount = 2;
+        currentGrapplePosition = gunTip.position;
+    }
+
+    /// <summary>
+    /// Ищет точку крепления двумя способами:
+    /// 1) точный Raycast от камеры (обычное прицеливание);
+    /// 2) SphereCast — прощает промах прицела на sphereCastRadius,
+    ///    т.е. можно зацепиться, даже если прицел чуть в стороне от нужного слоя.
+    /// </summary>
+    bool TryFindGrapplePoint(out Vector3 point) {
         RaycastHit hit;
+
+        // 1) Точный прицел
         if (Physics.Raycast(camera.position, camera.forward, out hit, maxDistance, whatIsGrappleable)) {
-            grapplePoint = hit.point;
-            joint = player.gameObject.AddComponent<SpringJoint>();
-            joint.autoConfigureConnectedAnchor = false;
-            joint.connectedAnchor = grapplePoint;
-
-            float distanceFromPoint = Vector3.Distance(player.position, grapplePoint);
-
-            //The distance grapple will try to keep from grapple point. 
-            joint.maxDistance = distanceFromPoint * 0.8f;
-            joint.minDistance = distanceFromPoint * 0.25f;
-
-            //Adjust these values to fit your game.
-            joint.spring = 4.5f;
-            joint.damper = 7f;
-            joint.massScale = 4.5f;
-
-            lr.positionCount = 2;
-            currentGrapplePosition = gunTip.position;
+            point = hit.point;
+            return true;
         }
+
+        // 2) Прощающий SphereCast вдоль направления взгляда
+        if (useAimAssist && Physics.SphereCast(camera.position, sphereCastRadius, camera.forward, out hit, maxDistance, whatIsGrappleable)) {
+            point = hit.point;
+            return true;
+        }
+
+        point = Vector3.zero;
+        return false;
     }
 
 
