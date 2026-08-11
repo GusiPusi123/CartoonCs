@@ -142,14 +142,18 @@ public class ShotgunWeapon : MonoBehaviour, IAmmoMagazine, IWeaponSwitchable
         {
             Vector3 pelletDirection = ApplySpread(baseDirection);
 
+            // Raycast остаётся мгновенным — так дробь точно попадает туда, куда целился игрок
+            // в момент выстрела (иначе за время полёта трассера цель могла бы сдвинуться,
+            // и попадание перестало бы совпадать с тем, что видит игрок).
             if (Physics.Raycast(origin, pelletDirection, out RaycastHit hit, range, hitMask))
             {
-                HandleHit(hit);
-                SpawnTracer(hit.point);
+                // Эффект/урон от этого попадания больше НЕ применяется сразу —
+                // он передаётся в SpawnTracer и сработает только когда трассер долетит.
+                SpawnTracer(hit.point, hit);
             }
             else
             {
-                SpawnTracer(origin + pelletDirection * range);
+                SpawnTracer(origin + pelletDirection * range, null);
             }
         }
 
@@ -165,6 +169,11 @@ public class ShotgunWeapon : MonoBehaviour, IAmmoMagazine, IWeaponSwitchable
         return spreadRotation * direction;
     }
 
+    /// <summary>
+    /// Применяет урон, спавнит эффект попадания и импульс от удара.
+    /// Вызывается НЕ в момент выстрела, а в момент, когда трассер визуально долетел до цели
+    /// (см. DelayedImpact).
+    /// </summary>
     private void HandleHit(RaycastHit hit)
     {
         int finalDamage = damagePerPellet;
@@ -202,9 +211,19 @@ public class ShotgunWeapon : MonoBehaviour, IAmmoMagazine, IWeaponSwitchable
         }
     }
 
-    private void SpawnTracer(Vector3 targetPoint)
+    /// <summary>
+    /// Спавнит трассер и, если было попадание, запускает отложенный вызов HandleHit —
+    /// ровно на то время, за которое трассер долетит до точки попадания.
+    /// </summary>
+    private void SpawnTracer(Vector3 targetPoint, RaycastHit? hit)
     {
-        if (bulletTracerPrefab == null || firePoint == null) return;
+        if (bulletTracerPrefab == null || firePoint == null)
+        {
+            // Нет визуального трассера — ждать нечего, применяем эффект попадания сразу.
+            if (hit.HasValue)
+                HandleHit(hit.Value);
+            return;
+        }
 
         GameObject tracer = Instantiate(bulletTracerPrefab, firePoint.position, Quaternion.LookRotation(targetPoint - firePoint.position));
 
@@ -214,6 +233,24 @@ public class ShotgunWeapon : MonoBehaviour, IAmmoMagazine, IWeaponSwitchable
 
         TracerProjectile projectile = tracer.AddComponent<TracerProjectile>();
         projectile.Launch(targetPoint, tracerSpeed, null);
+
+        if (hit.HasValue)
+        {
+            float distance = Vector3.Distance(firePoint.position, targetPoint);
+            float travelTime = tracerSpeed > 0f ? distance / tracerSpeed : 0f;
+            StartCoroutine(DelayedImpact(hit.Value, travelTime));
+        }
+    }
+
+    /// <summary>
+    /// Ждёт время полёта трассера, затем применяет урон/эффект попадания.
+    /// </summary>
+    private IEnumerator DelayedImpact(RaycastHit hit, float delay)
+    {
+        if (delay > 0f)
+            yield return new WaitForSeconds(delay);
+
+        HandleHit(hit);
     }
 
     private void SpawnMuzzleFlash()

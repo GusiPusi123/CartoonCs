@@ -62,7 +62,7 @@ MonoBehaviour:
   magazineSize: 25
   reloadTime: 1.4
   bulletTracerPrefab: {fileID: 1642549959154380408, guid: c35f573c7552c754695ccf1246b2934c, type: 3}
-  tracerSpeed: 60
+  tracerSpeed: 40
   useInstantTracer: 0
   muzzleFlashEffect: {fileID: 8046648408647320551, guid: ea3a1b4aa9e184048a0fc80d176d18ad, type: 3}
   shellCasingPrefab: {fileID: 0}
@@ -76,9 +76,9 @@ MonoBehaviour:
   defaultImpactEffect: {fileID: 4473110526175719142, guid: 9a62fa07061ed544bba72e4a0bd92363, type: 3}
   enemyImpactEffect: {fileID: 4473110526175719142, guid: 50d4099292044424a917dd357f238251, type: 3}
   impactEffectLifetime: 1
-  recoilAmount: 3
-  recoilRecoverySpeed: 8
-  recoilSnapSpeed: 20
+  recoilAmount: 70
+  recoilRecoverySpeed: 5
+  recoilSnapSpeed: 5
   moveOffsetAmount: 0.05
   moveSmoothTime: 0.5
   animator: {fileID: 6331856929080061256}
@@ -804,7 +804,7 @@ MonoBehaviour:
   magazineSize: 20
   reloadTime: 1.4
   bulletTracerPrefab: {fileID: 1642549959154380408, guid: c35f573c7552c754695ccf1246b2934c, type: 3}
-  tracerSpeed: 60
+  tracerSpeed: 40
   useInstantTracer: 0
   muzzleFlashEffect: {fileID: 8046648408647320551, guid: ea3a1b4aa9e184048a0fc80d176d18ad, type: 3}
   shellCasingPrefab: {fileID: 0}
@@ -818,9 +818,9 @@ MonoBehaviour:
   defaultImpactEffect: {fileID: 4473110526175719142, guid: 9a62fa07061ed544bba72e4a0bd92363, type: 3}
   enemyImpactEffect: {fileID: 4473110526175719142, guid: 50d4099292044424a917dd357f238251, type: 3}
   impactEffectLifetime: 1
-  recoilAmount: 1.5
+  recoilAmount: 25
   recoilRecoverySpeed: 8
-  recoilSnapSpeed: 20
+  recoilSnapSpeed: 4
   moveOffsetAmount: 0.05
   moveSmoothTime: 0.5
   animator: {fileID: 482400013397865169}
@@ -948,7 +948,7 @@ MonoBehaviour:
   magazineSize: 10
   reloadTime: 1.1
   bulletTracerPrefab: {fileID: 1642549959154380408, guid: c35f573c7552c754695ccf1246b2934c, type: 3}
-  tracerSpeed: 60
+  tracerSpeed: 40
   useInstantTracer: 0
   muzzleFlashEffect: {fileID: 8046648408647320551, guid: ea3a1b4aa9e184048a0fc80d176d18ad, type: 3}
   shellCasingPrefab: {fileID: 0}
@@ -961,9 +961,9 @@ MonoBehaviour:
   defaultImpactEffect: {fileID: 4473110526175719142, guid: 9a62fa07061ed544bba72e4a0bd92363, type: 3}
   enemyImpactEffect: {fileID: 4473110526175719142, guid: 50d4099292044424a917dd357f238251, type: 3}
   impactEffectLifetime: 1
-  recoilAmount: 1.5
+  recoilAmount: 100
   recoilRecoverySpeed: 8
-  recoilSnapSpeed: 20
+  recoilSnapSpeed: 4
   moveOffsetAmount: 0.05
   moveSmoothTime: 0.5
   animator: {fileID: 6492959162126168916}
@@ -1219,7 +1219,7 @@ MonoBehaviour:
   magazineSize: 12
   reloadTime: 1.1
   bulletTracerPrefab: {fileID: 1642549959154380408, guid: c35f573c7552c754695ccf1246b2934c, type: 3}
-  tracerSpeed: 60
+  tracerSpeed: 40
   useInstantTracer: 0
   muzzleFlashEffect: {fileID: 8046648408647320551, guid: ea3a1b4aa9e184048a0fc80d176d18ad, type: 3}
   shellCasingPrefab: {fileID: 0}
@@ -1232,9 +1232,9 @@ MonoBehaviour:
   defaultImpactEffect: {fileID: 4473110526175719142, guid: 9a62fa07061ed544bba72e4a0bd92363, type: 3}
   enemyImpactEffect: {fileID: 4473110526175719142, guid: 50d4099292044424a917dd357f238251, type: 3}
   impactEffectLifetime: 1
-  recoilAmount: 1.5
+  recoilAmount: 100
   recoilRecoverySpeed: 8
-  recoilSnapSpeed: 20
+  recoilSnapSpeed: 4
   moveOffsetAmount: 0.05
   moveSmoothTime: 0.5
   animator: {fileID: 2097336151473428151}
@@ -1300,58 +1300,6 @@ MonoBehaviour:
   enableMovementSway: 1
   movementSwayAmount: 0.05
   movementSmoothTime: 0.5
---- !u!1 &1623323801457868207
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4755527361311208860}
-  - component: {fileID: 6742385305632716270}
-  m_Layer: 0
-  m_Name: VignetteEffect
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &4755527361311208860
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1623323801457868207}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 687, y: 322.74, z: 0.1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5293444984094233560}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6742385305632716270
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1623323801457868207}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30233c4317f3da341b89770751691ed0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  vignetteGroup: {fileID: 0}
-  damageFlashAlpha: 1
-  damageFlashFadeSpeed: 2
-  lowHealthMinAlpha: 1
-  lowHealthMaxAlpha: 30
-  pulseSpeed: 2
-  debugLogs: 0
-  testFlashKey: 116
 --- !u!1 &2121123586463322163
 GameObject:
   m_ObjectHideFlags: 0
@@ -1414,7 +1362,7 @@ MonoBehaviour:
   magazineSize: 35
   reloadTime: 1.5
   bulletTracerPrefab: {fileID: 1642549959154380408, guid: c35f573c7552c754695ccf1246b2934c, type: 3}
-  tracerSpeed: 60
+  tracerSpeed: 40
   useInstantTracer: 0
   muzzleFlashEffect: {fileID: 8046648408647320551, guid: ea3a1b4aa9e184048a0fc80d176d18ad, type: 3}
   shellCasingPrefab: {fileID: 0}
@@ -1428,9 +1376,9 @@ MonoBehaviour:
   defaultImpactEffect: {fileID: 4473110526175719142, guid: 9a62fa07061ed544bba72e4a0bd92363, type: 3}
   enemyImpactEffect: {fileID: 4473110526175719142, guid: 50d4099292044424a917dd357f238251, type: 3}
   impactEffectLifetime: 1
-  recoilAmount: 3
-  recoilRecoverySpeed: 8
-  recoilSnapSpeed: 20
+  recoilAmount: 70
+  recoilRecoverySpeed: 5
+  recoilSnapSpeed: 5
   moveOffsetAmount: 0.05
   moveSmoothTime: 0.5
   animator: {fileID: 2959617013997426671}
@@ -1679,10 +1627,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whatIsGrappleable:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 1024
   gunTip: {fileID: 8223897527700190819}
   camera: {fileID: 5293444984094233560}
   player: {fileID: 6526899840674656900}
+  useAimAssist: 1
+  sphereCastRadius: 1.2
 --- !u!1 &2430959361571633025
 GameObject:
   m_ObjectHideFlags: 0
@@ -1739,7 +1689,7 @@ Transform:
   m_GameObject: {fileID: 2718082532281174677}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.56, z: 0}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2121,6 +2071,7 @@ GameObject:
   - component: {fileID: 9056068187554285235}
   - component: {fileID: 7903108492602288499}
   - component: {fileID: 6485311331432890065}
+  - component: {fileID: 5239327012623082760}
   - component: {fileID: 2531626560926840888}
   - component: {fileID: 3246401648665237754}
   - component: {fileID: 7005257449595008148}
@@ -2145,7 +2096,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1942469054803586766}
-  - {fileID: 4755527361311208860}
   - {fileID: 3940856689863052602}
   m_Father: {fileID: 3382238132417252182}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2223,6 +2173,18 @@ MonoBehaviour:
   tiltAmount: 5
   tiltStartSpeed: 2.5
   tiltEndSpeed: 2.5
+--- !u!114 &5239327012623082760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3886726587170871471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b93522a62cac98548838163dec151122, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2531626560926840888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2295,7 +2257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: 2c9ebc5b5de64494eb66e1f3eb755731, type: 2}
+  sharedProfile: {fileID: 11400000, guid: 7392acb084e97f84abc1415a1f799972, type: 2}
   isGlobal: 1
   blendDistance: 0
   weight: 1
@@ -2536,7 +2498,7 @@ MonoBehaviour:
   magazineSize: 60
   reloadTime: 1.4
   bulletTracerPrefab: {fileID: 1642549959154380408, guid: c35f573c7552c754695ccf1246b2934c, type: 3}
-  tracerSpeed: 60
+  tracerSpeed: 40
   useInstantTracer: 0
   muzzleFlashEffect: {fileID: 8046648408647320551, guid: ea3a1b4aa9e184048a0fc80d176d18ad, type: 3}
   shellCasingPrefab: {fileID: 0}
@@ -2550,9 +2512,9 @@ MonoBehaviour:
   defaultImpactEffect: {fileID: 4473110526175719142, guid: 9a62fa07061ed544bba72e4a0bd92363, type: 3}
   enemyImpactEffect: {fileID: 4473110526175719142, guid: 50d4099292044424a917dd357f238251, type: 3}
   impactEffectLifetime: 1
-  recoilAmount: 4
-  recoilRecoverySpeed: 10
-  recoilSnapSpeed: 40
+  recoilAmount: 25
+  recoilRecoverySpeed: 8
+  recoilSnapSpeed: 4
   moveOffsetAmount: 0.05
   moveSmoothTime: 0.5
   animator: {fileID: 7667555992704863147}
@@ -3073,7 +3035,7 @@ MonoBehaviour:
   magazineSize: 30
   reloadTime: 1.35
   bulletTracerPrefab: {fileID: 1642549959154380408, guid: c35f573c7552c754695ccf1246b2934c, type: 3}
-  tracerSpeed: 60
+  tracerSpeed: 40
   useInstantTracer: 0
   muzzleFlashEffect: {fileID: 8046648408647320551, guid: ea3a1b4aa9e184048a0fc80d176d18ad, type: 3}
   shellCasingPrefab: {fileID: 0}
@@ -3087,9 +3049,9 @@ MonoBehaviour:
   defaultImpactEffect: {fileID: 4473110526175719142, guid: 9a62fa07061ed544bba72e4a0bd92363, type: 3}
   enemyImpactEffect: {fileID: 4473110526175719142, guid: 50d4099292044424a917dd357f238251, type: 3}
   impactEffectLifetime: 1
-  recoilAmount: 2
+  recoilAmount: 25
   recoilRecoverySpeed: 8
-  recoilSnapSpeed: 20
+  recoilSnapSpeed: 4
   moveOffsetAmount: 0.05
   moveSmoothTime: 0.5
   animator: {fileID: 402909247037157280}
@@ -3579,7 +3541,7 @@ MonoBehaviour:
   reloadAnimTrigger: Reload
   reloadSound: {fileID: 0}
   bulletTracerPrefab: {fileID: 1642549959154380408, guid: c35f573c7552c754695ccf1246b2934c, type: 3}
-  tracerSpeed: 200
+  tracerSpeed: 40
   muzzleFlashEffect: {fileID: 8046648408647320551, guid: ea3a1b4aa9e184048a0fc80d176d18ad, type: 3}
   shellCasingPrefab: {fileID: 0}
   shellEjectForce: 2
@@ -3591,9 +3553,9 @@ MonoBehaviour:
   defaultImpactEffect: {fileID: 4473110526175719142, guid: 9a62fa07061ed544bba72e4a0bd92363, type: 3}
   enemyImpactEffect: {fileID: 4473110526175719142, guid: 50d4099292044424a917dd357f238251, type: 3}
   impactEffectLifetime: 2
-  recoilAmount: 4
-  recoilRecoverySpeed: 6
-  recoilSnapSpeed: 18
+  recoilAmount: 150
+  recoilRecoverySpeed: 4
+  recoilSnapSpeed: 2
   animator: {fileID: 3796028209131116646}
   idleStateName: Idle
   fireAnimTrigger: Fire
