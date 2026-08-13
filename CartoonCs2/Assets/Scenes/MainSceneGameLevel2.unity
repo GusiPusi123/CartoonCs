@@ -24281,6 +24281,14 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 49f162acff5f01944a9ce70a558ac56d, type: 2}
+    - target: {fileID: 2740560477895233346, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      propertyPath: ropeExtendSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2740560477895233346, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      propertyPath: whipCurveAmount
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3139601327833584282, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
       propertyPath: healthSlider
       value: 
@@ -24344,6 +24352,18 @@ PrefabInstance:
     - target: {fileID: 5916192197854039509, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6688383312331105090, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      propertyPath: playerMovement
+      value: 
+      objectReference: {fileID: 1402273994}
+    - target: {fileID: 6688383312331105090, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      propertyPath: shakeSmoothing
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6688383312331105090, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
+      propertyPath: shakeThresholdSpeed
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7023451398546071595, guid: 9e37de44cdda8764f87e08c8db152b0d, type: 3}
       propertyPath: ammoText

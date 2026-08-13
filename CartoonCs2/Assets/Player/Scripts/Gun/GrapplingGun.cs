@@ -13,6 +13,18 @@ public class GrapplingGun : MonoBehaviour
     public bool useAimAssist = true;
     public float sphereCastRadius = 3f; // прощает промах прицела на этот радиус
 
+    [Header("Rope visuals")]
+    public int ropeSegments = 16;         // сегментов для изгиба во время полёта
+    public float ropeExtendSpeed = 20f;   // скорость "вылета" верёвки, юнитов в секунду
+    public float whipCurveAmount = 2f;  // сила изгиба "хлыста" во время полёта
+    public float whipFrequency = 1.5f;    // сколько "волн" укладывается по длине верёвки
+
+    // Состояние анимации верёвки
+    private float extendProgress;   // 0..1, прогресс "вылета" верёвки к точке
+    private bool isExtending;
+    private Vector3[] ropePositions;
+    private Vector3 flightDirection; // направление полёта крюка (фиксируется в момент выстрела)
+
     void Awake() {
         lr = GetComponent<LineRenderer>();
     }
@@ -23,6 +35,20 @@ public class GrapplingGun : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(1)) {
             StopGrapple();
+        }
+
+        if (isExtending) {
+            float dist = Vector3.Distance(gunTip.position, grapplePoint);
+            extendProgress += Time.deltaTime * ropeExtendSpeed / Mathf.Max(dist, 0.01f);
+
+            if (extendProgress >= 1f) {
+                extendProgress = 1f;
+                isExtending = false;
+
+                // Только теперь, когда верёвка реально долетела до точки,
+                // включаем физику крюка.
+                AttachJoint();
+            }
         }
     }
 
@@ -37,6 +63,14 @@ public class GrapplingGun : MonoBehaviour
     void StartGrapple() {
         if (!TryFindGrapplePoint(out grapplePoint)) return;
 
+        extendProgress = 0f;
+        isExtending = true;
+        lr.positionCount = ropeSegments;
+
+        flightDirection = (grapplePoint - gunTip.position).normalized;
+    }
+
+    void AttachJoint() {
         joint = player.gameObject.AddComponent<SpringJoint>();
         joint.autoConfigureConnectedAnchor = false;
         joint.connectedAnchor = grapplePoint;
@@ -51,9 +85,6 @@ public class GrapplingGun : MonoBehaviour
         joint.spring = 4.5f;
         joint.damper = 7f;
         joint.massScale = 4.5f;
-
-        lr.positionCount = 2;
-        currentGrapplePosition = gunTip.position;
     }
 
     /// <summary>
@@ -87,19 +118,58 @@ public class GrapplingGun : MonoBehaviour
     /// </summary>
     void StopGrapple() {
         lr.positionCount = 0;
-        Destroy(joint);
+        isExtending = false;
+        if (joint != null) Destroy(joint);
     }
 
-    private Vector3 currentGrapplePosition;
-    
     void DrawRope() {
-        //If not grappling, don't draw rope
-        if (!joint) return;
+        // Если крюк вообще не активен (ни летит, ни зацеплен) — не рисуем верёвку
+        if (!isExtending && joint == null) return;
 
-        currentGrapplePosition = Vector3.Lerp(currentGrapplePosition, grapplePoint, Time.deltaTime * 8f);
-        
-        lr.SetPosition(0, gunTip.position);
-        lr.SetPosition(1, currentGrapplePosition);
+        // Когда крюк уже зацепился — верёвка прямая, без изгиба
+        if (!isExtending) {
+            lr.positionCount = 2;
+            lr.SetPosition(0, gunTip.position);
+            lr.SetPosition(1, grapplePoint);
+            return;
+        }
+
+        if (lr.positionCount != ropeSegments) lr.positionCount = ropeSegments;
+        if (ropePositions == null || ropePositions.Length != ropeSegments)
+            ropePositions = new Vector3[ropeSegments];
+
+        Vector3 start = gunTip.position;
+
+        // easeOut — кончик верёвки летит быстро и слегка "докручивает" перед точкой
+        float easedT = 1f - Mathf.Pow(1f - extendProgress, 3f);
+        Vector3 tip = Vector3.Lerp(start, grapplePoint, easedT);
+
+        // Перпендикуляр к направлению полёта — вдоль него будем изгибать "хлыст"
+        Vector3 perp = Vector3.Cross(flightDirection, Vector3.up);
+        if (perp.sqrMagnitude < 0.001f) perp = Vector3.Cross(flightDirection, Vector3.right);
+        perp.Normalize();
+
+        // Изгиб сильнее всего в середине полёта (t ~ 0.5) и пропадает к 0 и к 1,
+        // это и даёт ощущение "хлыста", а не прямой линии
+        float curveStrength = Mathf.Sin(extendProgress * Mathf.PI) * whipCurveAmount;
+
+        for (int i = 0; i < ropeSegments; i++) {
+            float segmentT = (float)i / (ropeSegments - 1);
+
+            // Точка вдоль пока ещё не долетевшей верёвки — от старта до текущего кончика
+            Vector3 pointOnLine = Vector3.Lerp(start, tip, segmentT);
+
+            // Бегущая волна вдоль верёвки: у основания и у кончика — почти без изгиба,
+            // максимум где-то посередине, и вся волна "уезжает" вперёд по мере полёта
+            float wave = Mathf.Sin(segmentT * Mathf.PI * whipFrequency - extendProgress * Mathf.PI * 2f)
+                         * Mathf.Sin(segmentT * Mathf.PI); // зануляем на концах
+
+            pointOnLine += perp * wave * curveStrength;
+
+            ropePositions[i] = pointOnLine;
+        }
+
+        lr.SetPositions(ropePositions);
     }
 
     public bool IsGrappling() {
