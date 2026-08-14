@@ -13057,6 +13057,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FinalLevelCube
       objectReference: {fileID: 0}
+    - target: {fileID: 6736989980662611859, guid: 68dc99cd76f5bf54e85b024004307328, type: 3}
+      propertyPath: targetSceneName
+      value: MainSceneGameLevel5
+      objectReference: {fileID: 0}
     - target: {fileID: 8298654022156690587, guid: 68dc99cd76f5bf54e85b024004307328, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
