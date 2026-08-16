@@ -36,6 +36,15 @@ public class EnemyRagdollShooter : MonoBehaviour, IDamageable
     [Tooltip("Скорость доворота руки к цели (чем больше, тем резче)")]
     [SerializeField] private float handAimSpeed = 15f;
 
+    // Собственное "накопленное" вращение прицела руки, не зависящее от того,
+    // что Animator записал в handBone.rotation в этом кадре. Раньше сглаживание
+    // бралось от handBone.rotation ПОСЛЕ применения анимации (Update -> Animator -> LateUpdate),
+    // из-за чего во время роликов вроде "Shoot" рука дёргалась к позе анимации
+    // и заново доворачивалась на цель. Теперь сглаживаем независимое состояние
+    // и только в конце примешиваем его к текущей позе анимации через handAimWeight.
+    private Quaternion currentHandAimRotation;
+    private bool handAimInitialized;
+
     [Header("Поведение / преследование")]
     [SerializeField] private float detectionRadius = 20f;
     [Tooltip("Если выключено — враг не будет подходить к игроку, только разворачивается и стреляет с места")]
@@ -69,6 +78,12 @@ public class EnemyRagdollShooter : MonoBehaviour, IDamageable
 
     [Header("Анимация")]
     [SerializeField] private Animator animator;
+    [Tooltip("Имя float-параметра в Animator Controller для скорости бега (0 = стоит, 1 = бежит с полной скоростью agent.speed)")]
+    [SerializeField] private string speedParam = "Speed";
+    [Tooltip("Как быстро параметр Speed сглаживается к реальной скорости агента (0 = мгновенно)")]
+    [SerializeField] private float speedSmoothTime = 0.1f;
+    private float currentAnimSpeed;
+    private float animSpeedVelocity;
 
     [Header("Мигание при уроне")]
     [SerializeField] private Color flashColor = Color.white;
@@ -144,6 +159,8 @@ public class EnemyRagdollShooter : MonoBehaviour, IDamageable
             return;
         }
 
+        UpdateMoveAnimation();
+
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
         if (distanceToPlayer <= detectionRadius)
@@ -171,8 +188,19 @@ public class EnemyRagdollShooter : MonoBehaviour, IDamageable
         Quaternion axisRemap = Quaternion.FromToRotation(handForwardAxis, Vector3.forward);
         Quaternion targetRotation = Quaternion.LookRotation(aimDir, transform.up) * axisRemap;
 
-        Quaternion blended = Quaternion.Slerp(handBone.rotation, targetRotation, handAimWeight);
-        handBone.rotation = Quaternion.Slerp(handBone.rotation, blended, Time.deltaTime * handAimSpeed);
+        if (!handAimInitialized)
+        {
+            currentHandAimRotation = handBone.rotation;
+            handAimInitialized = true;
+        }
+
+        // Сглаживаем СВОЁ накопленное состояние прицела, а не handBone.rotation —
+        // тот уже мог быть перезаписан анимацией (например, роликом "Shoot") в этом кадре.
+        // Так прицел не "дёргается" к позе анимации при каждом выстреле.
+        currentHandAimRotation = Quaternion.Slerp(currentHandAimRotation, targetRotation, Time.deltaTime * handAimSpeed);
+
+        // handAimWeight решает, насколько сильно наш прицел перебивает текущую позу анимации.
+        handBone.rotation = Quaternion.Slerp(handBone.rotation, currentHandAimRotation, handAimWeight);
     }
 
     private Vector3 GetAimPoint()
@@ -251,9 +279,6 @@ public class EnemyRagdollShooter : MonoBehaviour, IDamageable
         if (lookDir != Vector3.zero)
             transform.rotation = Quaternion.LookRotation(lookDir);
 
-        if (animator != null)
-            animator.SetTrigger("Shoot");
-
         PlayShootSound();
 
         if (muzzleFlashEffect != null && firePoint != null)
@@ -322,6 +347,22 @@ public class EnemyRagdollShooter : MonoBehaviour, IDamageable
         rb.velocity = direction * projectileSpeed;
     }
 
+    // ---------- Анимация движения ----------
+
+    /// <summary>
+    /// Обновляет float-параметр аниматора (по умолчанию "Speed") на основе реальной
+    /// скорости NavMeshAgent, нормализованной к [0..1] относительно agent.speed.
+    /// Настрой Blend Tree/переходы Idle-Run в Animator Controller по этому параметру.
+    /// </summary>
+    private void UpdateMoveAnimation()
+    {
+        if (animator == null || string.IsNullOrEmpty(speedParam)) return;
+
+        float targetSpeed = agent.velocity.magnitude / Mathf.Max(agent.speed, 0.01f);
+        currentAnimSpeed = Mathf.SmoothDamp(currentAnimSpeed, targetSpeed, ref animSpeedVelocity, speedSmoothTime);
+        animator.SetFloat(speedParam, currentAnimSpeed);
+    }
+
     // ---------- Получение урона ----------
 
     // Реализация IDamageable — используется, когда пуля/оружие попадает напрямую
@@ -346,9 +387,6 @@ public class EnemyRagdollShooter : MonoBehaviour, IDamageable
 
         if (debugLogs)
             Debug.Log($"[{name}] Получено {finalDamage} урона (headshot: {isHeadshot}). Осталось HP: {currentHealth}");
-
-        if (animator != null)
-            animator.SetTrigger("Hit");
 
         if (audioSource != null && hitSound != null)
             audioSource.PlayOneShot(hitSound);

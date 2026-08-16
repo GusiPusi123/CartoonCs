@@ -113,6 +113,10 @@ MonoBehaviour:
   explosionVolume: 1
   explodeOnHardImpact: 0
   impactVelocityThreshold: 8
+  shakeMaxIntensity: 0.4
+  shakeDuration: 0.35
+  shakeRadius: 12
+  targetCamera: {fileID: 0}
 --- !u!1 &1379746328939659809
 GameObject:
   m_ObjectHideFlags: 0
