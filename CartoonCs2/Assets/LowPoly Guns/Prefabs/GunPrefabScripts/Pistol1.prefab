@@ -135,7 +135,7 @@ MonoBehaviour:
   firePoint: {fileID: 6100027890306944516}
   shellEjectPoint: {fileID: 0}
   playerCamera: {fileID: 0}
-  damage: 20
+  damage: 30
   range: 100
   fireRate: 3
   isAutomatic: 1
