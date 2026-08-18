@@ -17,7 +17,7 @@ public class ShotgunWeapon : MonoBehaviour, IAmmoMagazine, IWeaponSwitchable
     [Tooltip("Угол разброса дроби в градусах (по горизонтали и вертикали от центра прицела)")]
     [SerializeField] private float spreadAngle = 4f;
     [Tooltip("Урон от ОДНОЙ дробинки. Общий урон при полном попадании = damagePerPellet * pelletsPerShot")]
-    [SerializeField] private int damagePerPellet = 18;
+    [SerializeField] private int damagePerPellet = 20;
     [SerializeField] private float range = 25f;
     [Tooltip("Выстрелов в секунду (для помпового — обычно 1-1.5)")]
     [SerializeField] private float fireRate = 1.2f;

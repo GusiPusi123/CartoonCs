@@ -109,7 +109,7 @@ MonoBehaviour:
   playerCamera: {fileID: 0}
   pelletsPerShot: 8
   spreadAngle: 3
-  damagePerPellet: 18
+  damagePerPellet: 20
   range: 100
   fireRate: 0.8
   hitMask:
