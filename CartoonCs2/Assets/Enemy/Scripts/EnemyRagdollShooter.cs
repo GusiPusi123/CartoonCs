@@ -567,6 +567,8 @@ public class EnemyRagdollShooter : MonoBehaviour, IDamageable
     [SerializeField] private LayerMask lineOfSightMask;
     [SerializeField] private LayerMask hitMask;
     [SerializeField] private float fireRate = 1.5f;
+    [Tooltip("Разброс интервала между выстрелами в долях от базового (0 = без разброса, 0.3 = ±30%)")]
+    [SerializeField, Range(0f, 0.9f)] private float fireRateVariance = 0.3f;
     [SerializeField] private float shootRange = 15f;
     [SerializeField] private int hitscanDamage = 10;
 
@@ -581,7 +583,13 @@ public class EnemyRagdollShooter : MonoBehaviour, IDamageable
     [SerializeField] private AudioClip[] shootSounds;
     [SerializeField] private AudioClip hitSound;
     [SerializeField] private AudioClip deathSound;
+    [Tooltip("Базовый питч звука выстрела (без учёта разброса)")]
+    [SerializeField] private float shootPitchBase = 1f;
+    [Tooltip("Случайный разброс питча выстрела в обе стороны от базового (0 = без разброса, 0.1 = ±0.1)")]
+    [SerializeField, Range(0f, 0.5f)] private float shootPitchVariance = 0.08f;
     [SerializeField] private GameObject muzzleFlashEffect;
+    [Tooltip("Через сколько секунд уничтожать заспавненный эффект вспышки/частиц. 0 — не уничтожать автоматически (например, если у префаба уже есть свой Stop Action = Destroy)")]
+    [SerializeField] private float muzzleFlashLifetime = 2f;
 
     [Header("Анимация")]
     [SerializeField] private Animator animator;
@@ -591,6 +599,7 @@ public class EnemyRagdollShooter : MonoBehaviour, IDamageable
     [SerializeField] private float speedSmoothTime = 0.1f;
     private float currentAnimSpeed;
     private float animSpeedVelocity;
+    private int speedParamHash;
 
     [Header("Мигание при уроне")]
     [SerializeField] private Color flashColor = Color.white;
@@ -627,6 +636,9 @@ public class EnemyRagdollShooter : MonoBehaviour, IDamageable
         // и когда враг стоит на месте (например, на preferredDistance), поворот вообще не происходит.
         agent.updateRotation = false;
         currentHealth = maxHealth;
+
+        if (!string.IsNullOrEmpty(speedParam))
+            speedParamHash = Animator.StringToHash(speedParam);
 
         renderers = GetComponentsInChildren<Renderer>();
         originalColors = new Color[renderers.Length];
@@ -795,18 +807,51 @@ public class EnemyRagdollShooter : MonoBehaviour, IDamageable
             Vector3 retreatDir = (transform.position - player.position).normalized;
             Vector3 retreatPoint = transform.position + retreatDir * (retreatDistance - distanceToPlayer + 1f);
 
-            if (NavMesh.SamplePosition(retreatPoint, out NavMeshHit hit, navMeshSampleRadius, NavMesh.AllAreas))
-                agent.SetDestination(hit.position);
+            TrySetDestination(retreatPoint, "отступление");
         }
         else if (distanceToPlayer > preferredDistance || !hasLineOfSight)
         {
-            if (NavMesh.SamplePosition(player.position, out NavMeshHit hit, navMeshSampleRadius, NavMesh.AllAreas))
-                agent.SetDestination(hit.position);
+            TrySetDestination(player.position, "подход к игроку");
         }
         else
         {
             agent.ResetPath();
         }
+    }
+
+    /// <summary>
+    /// Пытается найти точку на NavMesh рядом с desiredPoint и направить туда агента.
+    /// Раньше при провале NavMesh.SamplePosition (например, точка оказалась вне навмеша
+    /// или радиуса navMeshSampleRadius) метод просто молча ничего не делал — SetDestination
+    /// не вызывался, и агент мог "зависать" на месте без объяснения причины.
+    /// Теперь: 1) логируем предупреждение, 2) пробуем ещё раз с увеличенным радиусом
+    /// на случай, если desiredPoint просто немного не долетела до навмеша.
+    /// </summary>
+    private void TrySetDestination(Vector3 desiredPoint, string context)
+    {
+        if (NavMesh.SamplePosition(desiredPoint, out NavMeshHit hit, navMeshSampleRadius, NavMesh.AllAreas))
+        {
+            agent.SetDestination(hit.position);
+            return;
+        }
+
+        // Первая попытка провалилась — пробуем с увеличенным радиусом (x3) на случай,
+        // если точка недалеко от края навмеша, но за пределами обычного радиуса поиска.
+        float fallbackRadius = navMeshSampleRadius * 3f;
+        if (NavMesh.SamplePosition(desiredPoint, out NavMeshHit fallbackHit, fallbackRadius, NavMesh.AllAreas))
+        {
+            if (debugLogs)
+                Debug.LogWarning($"[{name}] SamplePosition ({context}) не нашёл точку в радиусе {navMeshSampleRadius}, " +
+                                  $"но нашёл в увеличенном радиусе {fallbackRadius}.");
+            agent.SetDestination(fallbackHit.position);
+            return;
+        }
+
+        // Обе попытки провалились — рядом с desiredPoint вообще нет навмеша.
+        // Ничего не двигаем, чтобы агент не телепортировался в случайную точку.
+        if (debugLogs)
+            Debug.LogWarning($"[{name}] Не удалось найти точку NavMesh рядом с целью ({context}), " +
+                              $"desiredPoint={desiredPoint}, радиус до {fallbackRadius}. Агент остаётся на месте.");
     }
 
     private void HandleShooting(float distanceToPlayer)
@@ -818,7 +863,11 @@ public class EnemyRagdollShooter : MonoBehaviour, IDamageable
         if (fireCooldown > 0f) return;
 
         Shoot();
-        fireCooldown = 1f / fireRate;
+
+        // Разброс делает стрельбу менее "метрономной" — без него все враги одного
+        // типа стреляют с одинаковым идеальным интервалом, что выглядит механически.
+        float baseCooldown = 1f / fireRate;
+        fireCooldown = baseCooldown * Random.Range(1f - fireRateVariance, 1f + fireRateVariance);
     }
 
     private void Shoot()
@@ -831,7 +880,11 @@ public class EnemyRagdollShooter : MonoBehaviour, IDamageable
         PlayShootSound();
 
         if (muzzleFlashEffect != null && firePoint != null)
-            Instantiate(muzzleFlashEffect, firePoint.position, firePoint.rotation);
+        {
+            GameObject flash = Instantiate(muzzleFlashEffect, firePoint.position, firePoint.rotation);
+            if (muzzleFlashLifetime > 0f)
+                Destroy(flash, muzzleFlashLifetime);
+        }
 
         if (useProjectile)
             ShootProjectile();
@@ -842,7 +895,12 @@ public class EnemyRagdollShooter : MonoBehaviour, IDamageable
     private void PlayShootSound()
     {
         if (audioSource == null || shootSounds == null || shootSounds.Length == 0) return;
+
         AudioClip clip = shootSounds[Random.Range(0, shootSounds.Length)];
+
+        // Небольшой случайный питч на каждый выстрел — иначе одна и та же серия
+        // из пары клипов быстро начинает звучать однообразно/механически.
+        audioSource.pitch = shootPitchBase + Random.Range(-shootPitchVariance, shootPitchVariance);
         audioSource.PlayOneShot(clip);
     }
 
@@ -909,7 +967,7 @@ public class EnemyRagdollShooter : MonoBehaviour, IDamageable
 
         float targetSpeed = agent.velocity.magnitude / Mathf.Max(agent.speed, 0.01f);
         currentAnimSpeed = Mathf.SmoothDamp(currentAnimSpeed, targetSpeed, ref animSpeedVelocity, speedSmoothTime);
-        animator.SetFloat(speedParam, currentAnimSpeed);
+        animator.SetFloat(speedParamHash, currentAnimSpeed);
     }
 
     // ---------- Получение урона ----------

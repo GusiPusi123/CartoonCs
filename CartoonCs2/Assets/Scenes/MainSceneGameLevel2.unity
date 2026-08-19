@@ -11644,7 +11644,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.6666667
+  m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 81fae11ace930a649949ef0f9645fa71, type: 2}
   m_BuildHeightMesh: 0
@@ -12156,11 +12156,11 @@ PrefabInstance:
     - target: {fileID: 6872607187099427548, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 665061033}
     - target: {fileID: 6872607187099427548, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
       propertyPath: aimTarget
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1053328966}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12474,11 +12474,11 @@ PrefabInstance:
     - target: {fileID: 6872607187099427548, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 665061033}
     - target: {fileID: 6872607187099427548, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
       propertyPath: aimTarget
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1053328966}
     - target: {fileID: 7792167223490410913, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
       propertyPath: m_ConnectedAnchor.x
       value: -0.0000000011920929
@@ -16231,7 +16231,7 @@ PrefabInstance:
       objectReference: {fileID: 988807931}
     - target: {fileID: 4502455763169911636, guid: d14835a361bb4d8468bce2e36663da5c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.54
+      value: -1.61
       objectReference: {fileID: 0}
     - target: {fileID: 4502455763169911636, guid: d14835a361bb4d8468bce2e36663da5c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -16239,7 +16239,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4502455763169911636, guid: d14835a361bb4d8468bce2e36663da5c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.76
+      value: 0.83
       objectReference: {fileID: 0}
     - target: {fileID: 4502455763169911636, guid: d14835a361bb4d8468bce2e36663da5c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -16273,6 +16273,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1267514477}
+    - target: {fileID: 7591222316997571819, guid: d14835a361bb4d8468bce2e36663da5c, type: 3}
+      propertyPath: explosionDamage
+      value: 70
+      objectReference: {fileID: 0}
     - target: {fileID: 7891917851364387181, guid: d14835a361bb4d8468bce2e36663da5c, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -16782,6 +16786,14 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1053733761}
+    - target: {fileID: 7591222316997571819, guid: d14835a361bb4d8468bce2e36663da5c, type: 3}
+      propertyPath: explosionDamage
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 7591222316997571819, guid: d14835a361bb4d8468bce2e36663da5c, type: 3}
+      propertyPath: explosionRadius
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7891917851364387181, guid: d14835a361bb4d8468bce2e36663da5c, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -25275,11 +25287,11 @@ PrefabInstance:
     - target: {fileID: 6872607187099427548, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 665061033}
     - target: {fileID: 6872607187099427548, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
       propertyPath: aimTarget
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1053328966}
     - target: {fileID: 7792167223490410913, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
       propertyPath: m_ConnectedAnchor.x
       value: -0.0000000011920929
@@ -25716,11 +25728,11 @@ PrefabInstance:
     - target: {fileID: 6872607187099427548, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 665061033}
     - target: {fileID: 6872607187099427548, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
       propertyPath: aimTarget
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1053328966}
     - target: {fileID: 7792167223490410913, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
       propertyPath: m_ConnectedAnchor.x
       value: -0.0000000011920929
@@ -27254,11 +27266,11 @@ PrefabInstance:
     - target: {fileID: 6872607187099427548, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 665061033}
     - target: {fileID: 6872607187099427548, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
       propertyPath: aimTarget
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1053328966}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -29124,11 +29136,11 @@ PrefabInstance:
     - target: {fileID: 6872607187099427548, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 665061033}
     - target: {fileID: 6872607187099427548, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
       propertyPath: aimTarget
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1053328966}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -30424,6 +30436,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 721704821}
+    - target: {fileID: 7591222316997571819, guid: d14835a361bb4d8468bce2e36663da5c, type: 3}
+      propertyPath: explosionDamage
+      value: 70
+      objectReference: {fileID: 0}
     - target: {fileID: 7891917851364387181, guid: d14835a361bb4d8468bce2e36663da5c, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -31896,11 +31912,11 @@ PrefabInstance:
     - target: {fileID: 6872607187099427548, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 665061033}
     - target: {fileID: 6872607187099427548, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
       propertyPath: aimTarget
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1053328966}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -32764,6 +32780,14 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 241554699}
+    - target: {fileID: 7591222316997571819, guid: d14835a361bb4d8468bce2e36663da5c, type: 3}
+      propertyPath: explosionDamage
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 7591222316997571819, guid: d14835a361bb4d8468bce2e36663da5c, type: 3}
+      propertyPath: explosionRadius
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7891917851364387181, guid: d14835a361bb4d8468bce2e36663da5c, type: 3}
       propertyPath: m_Mesh
       value: 

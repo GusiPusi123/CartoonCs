@@ -2372,6 +2372,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 2073986911}
+    - target: {fileID: 7591222316997571819, guid: d14835a361bb4d8468bce2e36663da5c, type: 3}
+      propertyPath: explosionDamage
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 7891917851364387181, guid: d14835a361bb4d8468bce2e36663da5c, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -20169,7 +20173,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.33333334
+  m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: e4202f07555cf0e4ea18824c99827c5f, type: 2}
   m_BuildHeightMesh: 0
@@ -27160,6 +27164,52 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
+--- !u!1 &1062174508
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1062174509}
+  - component: {fileID: 1062174510}
+  m_Layer: 0
+  m_Name: DamageNumberSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &1062174509
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062174508}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1419553702}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1062174510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062174508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1eac4ffe7f7aa94886475c14c9c8116, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageNumberPrefab: {fileID: 1150584519782596994, guid: 71ea113738119d346aefd16b318f92c1, type: 3}
+  spawnHeightOffset: 0.15
 --- !u!43 &1065400350
 Mesh:
   m_ObjectHideFlags: 0
@@ -36039,6 +36089,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1088420707}
+    - target: {fileID: 7591222316997571819, guid: d14835a361bb4d8468bce2e36663da5c, type: 3}
+      propertyPath: explosionDamage
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 7891917851364387181, guid: d14835a361bb4d8468bce2e36663da5c, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -36589,6 +36643,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 684639746}
+  - {fileID: 1062174509}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1428006640
@@ -47301,6 +47356,14 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 538041958}
+    - target: {fileID: 7591222316997571819, guid: d14835a361bb4d8468bce2e36663da5c, type: 3}
+      propertyPath: explosionDamage
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7591222316997571819, guid: d14835a361bb4d8468bce2e36663da5c, type: 3}
+      propertyPath: explosionRadius
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7891917851364387181, guid: d14835a361bb4d8468bce2e36663da5c, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -51386,7 +51449,7 @@ PrefabInstance:
       objectReference: {fileID: 1028304535}
     - target: {fileID: 4502455763169911636, guid: d14835a361bb4d8468bce2e36663da5c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.8200002
+      value: 0.19
       objectReference: {fileID: 0}
     - target: {fileID: 4502455763169911636, guid: d14835a361bb4d8468bce2e36663da5c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -51394,7 +51457,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4502455763169911636, guid: d14835a361bb4d8468bce2e36663da5c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -41.21
+      value: -38.65
       objectReference: {fileID: 0}
     - target: {fileID: 4502455763169911636, guid: d14835a361bb4d8468bce2e36663da5c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -51428,6 +51491,14 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 2141363970}
+    - target: {fileID: 7591222316997571819, guid: d14835a361bb4d8468bce2e36663da5c, type: 3}
+      propertyPath: explosionDamage
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7591222316997571819, guid: d14835a361bb4d8468bce2e36663da5c, type: 3}
+      propertyPath: explosionRadius
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7891917851364387181, guid: d14835a361bb4d8468bce2e36663da5c, type: 3}
       propertyPath: m_Mesh
       value: 
