@@ -25085,7 +25085,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2188354576072641176, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.42
+      value: 10.204
       objectReference: {fileID: 0}
     - target: {fileID: 2188354576072641176, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
       propertyPath: m_LocalPosition.y
@@ -25093,7 +25093,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2188354576072641176, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 25.74
+      value: 26.168
       objectReference: {fileID: 0}
     - target: {fileID: 2188354576072641176, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -27258,7 +27258,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2188354576072641176, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.29
+      value: 9.951
       objectReference: {fileID: 0}
     - target: {fileID: 2188354576072641176, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
       propertyPath: m_LocalPosition.y
@@ -27266,7 +27266,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2188354576072641176, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 32.98
+      value: 33.028
       objectReference: {fileID: 0}
     - target: {fileID: 2188354576072641176, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -32847,6 +32847,10 @@ PrefabInstance:
     - target: {fileID: 822000041791714289, guid: 68dc99cd76f5bf54e85b024004307328, type: 3}
       propertyPath: m_Name
       value: FinalLevelCube
+      objectReference: {fileID: 0}
+    - target: {fileID: 6736989980662611859, guid: 68dc99cd76f5bf54e85b024004307328, type: 3}
+      propertyPath: targetSceneName
+      value: MainSceneMenu
       objectReference: {fileID: 0}
     - target: {fileID: 8298654022156690587, guid: 68dc99cd76f5bf54e85b024004307328, type: 3}
       propertyPath: m_LocalPosition.x

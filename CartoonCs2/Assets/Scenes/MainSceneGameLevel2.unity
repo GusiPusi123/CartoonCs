@@ -12161,6 +12161,14 @@ PrefabInstance:
       propertyPath: aimTarget
       value: 
       objectReference: {fileID: 1053328966}
+    - target: {fileID: 6872607187099427548, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
+      propertyPath: shootRange
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6872607187099427548, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
+      propertyPath: detectionRadius
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12479,6 +12487,10 @@ PrefabInstance:
       propertyPath: aimTarget
       value: 
       objectReference: {fileID: 1053328966}
+    - target: {fileID: 6872607187099427548, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
+      propertyPath: detectionRadius
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 7792167223490410913, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
       propertyPath: m_ConnectedAnchor.x
       value: -0.0000000011920929
@@ -27271,6 +27283,14 @@ PrefabInstance:
       propertyPath: aimTarget
       value: 
       objectReference: {fileID: 1053328966}
+    - target: {fileID: 6872607187099427548, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
+      propertyPath: shootRange
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6872607187099427548, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
+      propertyPath: detectionRadius
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -29141,6 +29161,14 @@ PrefabInstance:
       propertyPath: aimTarget
       value: 
       objectReference: {fileID: 1053328966}
+    - target: {fileID: 6872607187099427548, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
+      propertyPath: shootRange
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6872607187099427548, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
+      propertyPath: detectionRadius
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -29738,7 +29766,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8298654022156690587, guid: 68dc99cd76f5bf54e85b024004307328, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.442236
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8298654022156690587, guid: 68dc99cd76f5bf54e85b024004307328, type: 3}
       propertyPath: m_LocalPosition.z
@@ -31917,6 +31945,10 @@ PrefabInstance:
       propertyPath: aimTarget
       value: 
       objectReference: {fileID: 1053328966}
+    - target: {fileID: 6872607187099427548, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
+      propertyPath: detectionRadius
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -33643,6 +33675,14 @@ PrefabInstance:
       propertyPath: aimTarget
       value: 
       objectReference: {fileID: 1053328966}
+    - target: {fileID: 6872607187099427548, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
+      propertyPath: shootRange
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6872607187099427548, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
+      propertyPath: detectionRadius
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

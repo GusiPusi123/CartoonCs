@@ -2299,6 +2299,10 @@ PrefabInstance:
       propertyPath: aimTarget
       value: 
       objectReference: {fileID: 180209135}
+    - target: {fileID: 6872607187099427548, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
+      propertyPath: detectionRadius
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -38142,6 +38146,10 @@ PrefabInstance:
       propertyPath: aimTarget
       value: 
       objectReference: {fileID: 180209135}
+    - target: {fileID: 6872607187099427548, guid: 4eb4e009c7e5ab14b9a5e95cbe9badb6, type: 3}
+      propertyPath: detectionRadius
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -714,7 +714,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &850903154
 RectTransform:
   m_ObjectHideFlags: 0
@@ -861,6 +861,7 @@ GameObject:
   - component: {fileID: 1049960814}
   - component: {fileID: 1049960813}
   - component: {fileID: 1049960812}
+  - component: {fileID: 1049960815}
   m_Layer: 5
   m_Name: ButtonPlay
   m_TagString: Untagged
@@ -885,7 +886,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 200, y: 226}
+  m_AnchoredPosition: {x: 200, y: 0}
   m_SizeDelta: {x: 600, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1049960812
@@ -970,6 +971,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1049960810}
   m_CullTransparentMesh: 1
+--- !u!114 &1049960815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1049960810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7c3c47c1e140de48a2217359ae20507, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalColor: {r: 0, g: 1, b: 0.89411765, a: 1}
+  hoverColor: {r: 1, g: 1, b: 1, a: 1}
+  normalScale: 1
+  hoverScale: 1.15
+  scaleSpeed: 10
+  buttonText: {fileID: 1663081686}
+  action: 1
 --- !u!43 &1070728929
 Mesh:
   m_ObjectHideFlags: 0
@@ -1667,6 +1687,7 @@ GameObject:
   - component: {fileID: 1374158645}
   - component: {fileID: 1374158644}
   - component: {fileID: 1374158643}
+  - component: {fileID: 1374158647}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1759,6 +1780,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1374158647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1374158642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f45626c313b6f574d983609b55e10e15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameSceneName: MainSceneGameLevel1
 --- !u!850595691 &1448758078
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -3037,6 +3071,7 @@ GameObject:
   - component: {fileID: 1608536343}
   - component: {fileID: 1608536342}
   - component: {fileID: 1608536341}
+  - component: {fileID: 1608536344}
   m_Layer: 5
   m_Name: ButtonExit
   m_TagString: Untagged
@@ -3061,7 +3096,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 200, y: -167}
+  m_AnchoredPosition: {x: 200, y: -200}
   m_SizeDelta: {x: 600, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1608536341
@@ -3146,6 +3181,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1608536339}
   m_CullTransparentMesh: 1
+--- !u!114 &1608536344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1608536339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7c3c47c1e140de48a2217359ae20507, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalColor: {r: 0, g: 1, b: 0.89411765, a: 1}
+  hoverColor: {r: 1, g: 1, b: 1, a: 1}
+  normalScale: 1
+  hoverScale: 1.15
+  scaleSpeed: 10
+  buttonText: {fileID: 1516332273}
+  action: 2
 --- !u!43 &1648313781
 Mesh:
   m_ObjectHideFlags: 0
